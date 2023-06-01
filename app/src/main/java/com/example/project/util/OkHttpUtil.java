@@ -22,12 +22,15 @@ public class OkHttpUtil {
 
   private static final OkHttpClient client = new OkHttpClient();
 
+
+
   public static void get(String url, Callback callback) {
     Request request = new Request.Builder()
         .url(url)
         .build();
     client.newCall(request).enqueue(callback);
   }
+
 
   public static void postForm(String url, FormBody formBody, Callback callback) {
     Request request = new Request.Builder()
@@ -38,7 +41,7 @@ public class OkHttpUtil {
   }
 
   public static void getJson(String url, String json, Callback callback) {
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json"));
+    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
             .url(url)
             .get()
@@ -47,7 +50,7 @@ public class OkHttpUtil {
   }
 
   public static void postJson(String url, String json, Callback callback) {
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json"));
+    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
         .url(url)
         .post(requestBody)
@@ -56,7 +59,7 @@ public class OkHttpUtil {
   }
 
   public static void putJson(String url, String json, Callback callback) {
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json"));
+    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
             .url(url)
             .put(requestBody)
@@ -64,7 +67,7 @@ public class OkHttpUtil {
     client.newCall(request).enqueue(callback);
   }
   public static void deleteJson(String url, String json, Callback callback) {
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json"));
+    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
             .url(url)
             .delete(requestBody)
