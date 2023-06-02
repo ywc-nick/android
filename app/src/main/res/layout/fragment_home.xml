@@ -3,15 +3,74 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/white"
     tools:context=".fragment.HomeFragment">
 
 
-    <TextView
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:textColor="@color/black"
-        android:text="home frag" />
+        android:layout_marginTop="30dp"
+        android:layout_marginBottom="10dp"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            >
+            <SearchView
+                android:id="@+id/search_view"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:background="@drawable/shape_life_search"
+                android:iconifiedByDefault="false"
+                android:textColor="#000000"
+                android:queryHint="输入搜索内容"
+                android:textColorHint="#292828"
+                 />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="搜索"
+                android:textColor="@color/blue"
+                android:textSize="20dp"
+                android:layout_marginRight="30dp"
+                android:layout_gravity="right|center"/>
+
+        </FrameLayout>
+
+
+
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/fra_home_tablayout"
+            android:layout_weight="1"
+            android:alpha="1"
+            app:tabRippleColor ="@android:color/transparent"
+            app:tabTextColor="@color/black"
+            app:tabSelectedTextColor="#03A9F4"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"
+            />
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/fra_home_viewpager"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="6"
+            tools:ignore="MissingConstraints" />
+        <!--    app:tabRippleColor = "@android:color/transparent"去掉点击动画效果-->
+
+    </LinearLayout>
+
 
 </LinearLayout>

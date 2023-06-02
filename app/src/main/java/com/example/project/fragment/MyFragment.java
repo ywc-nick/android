@@ -22,10 +22,11 @@ import com.example.project.pojo.Custer;
 import com.example.project.util.ImageUtils;
 import com.example.project.util.LoggerUtils;
 import com.example.project.util.OkHttpUtil;
+import com.example.project.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
-
+import java.util.Map;
 
 
 import okhttp3.Call;
@@ -72,9 +73,12 @@ public class MyFragment extends Fragment {
     public void dataFill(){
         //TODO 从共享首选项中拿取id
 
-
+        Map map = SharedPreferencesUtils.getSharePreferences(getContext());
+//        Integer id = map.get(SharedPreferencesUtils.ID);
         Integer id = 1;
-
+        if (id == 0){
+            return;
+        }
         url = "http://10.0.2.2:8080/qianxun/app1/custer/" + id;
         OkHttpUtil.get(url, new Callback(){
 
