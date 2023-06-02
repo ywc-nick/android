@@ -4,7 +4,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@color/white"
     tools:context=".fragment.HomeFragment">
 
 
@@ -43,20 +42,19 @@
         </FrameLayout>
 
 
-
         <com.google.android.material.tabs.TabLayout
             android:id="@+id/fra_home_tablayout"
-            android:layout_weight="1"
-            android:alpha="1"
-            app:tabRippleColor ="@android:color/transparent"
-            app:tabTextColor="@color/black"
-            app:tabSelectedTextColor="#03A9F4"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="60dp"
-            android:layout_marginRight="60dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            />
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="10dp"
+            android:layout_marginRight="60dp"
+            android:layout_weight="1"
+            android:alpha="1"
+            app:tabRippleColor="@android:color/transparent"
+            app:tabSelectedTextColor="#03A9F4"
+            app:tabTextColor="@color/black" />
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="1dp"

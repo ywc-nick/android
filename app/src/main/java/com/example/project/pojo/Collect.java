@@ -1,15 +1,16 @@
 package com.example.project.pojo;
 
+
 import java.io.Serializable;
 import java.util.Date;
 
 /**
  * @Author: yangwenchuan
- * @Date: 2022/11/24 20:15
- * Discretion: 喜欢
+ * @Date: 2022/11/24 20:14
+ * Discretion: 收藏
  */
 
-public class AppLikeText implements Serializable {
+public class Collect implements Serializable {
 
     private int id;
 
@@ -21,7 +22,7 @@ public class AppLikeText implements Serializable {
 
     @Override
     public String toString() {
-        return "AppLikeText{" +
+        return "AppCollectText{" +
                 "id=" + id +
                 ", custer=" + custer +
                 ", text=" + text +
@@ -61,10 +62,10 @@ public class AppLikeText implements Serializable {
         this.date = date;
     }
 
-    public AppLikeText() {
+    public Collect() {
     }
 
-    public AppLikeText(int id, Custer custer, Text text, Date date) {
+    public Collect(int id, Custer custer, Text text, Date date) {
         this.id = id;
         this.custer = custer;
         this.text = text;

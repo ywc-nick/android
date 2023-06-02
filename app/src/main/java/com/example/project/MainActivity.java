@@ -12,6 +12,7 @@ import android.widget.LinearLayout;
 import com.example.project.fragment.HomeFragment;
 import com.example.project.fragment.MyFragment;
 import com.example.project.util.LoggerUtils;
+import com.example.project.util.SharedPreferencesUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,18 @@ public class MainActivity extends AppCompatActivity {
     int posit;//标记上一次碎片的位置
     List<Fragment> fragmentsList;//碎片集合，不用每次都new，可替换旧的
 
+    // Todo
+    public void setTestData(){
+        SharedPreferencesUtils.setSharePreferences(getApplicationContext(),1,"12434","1242");
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        setTestData();
         init();
-        //判断是不是再次进入
+
         setData();
         //初始进入首页
     }

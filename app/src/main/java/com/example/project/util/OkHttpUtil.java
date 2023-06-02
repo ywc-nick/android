@@ -18,87 +18,91 @@ import okhttp3.logging.HttpLoggingInterceptor;
  */
 public class OkHttpUtil {
 
-//url前缀只需后面添加
-  public static String baseUrl = "http://10.0.2.2:8080/qianxun/app";
+    //url前缀只需后面添加
+    public static String baseUrl = "http://10.0.2.2:8080/qianxun/app";
 
-  private static final OkHttpClient client = new OkHttpClient();
-
-
-
-  public static void get(String url, Callback callback) {
-    loggingInterceptor();
-    Request request = new Request.Builder()
-        .url(url)
-        .build();
-    client.newCall(request).enqueue(callback);
-  }
+    private static final OkHttpClient client = new OkHttpClient();
 
 
-  public static void postForm(String url, FormBody formBody, Callback callback) {
-    loggingInterceptor();
-    Request request = new Request.Builder()
-        .url(url)
-        .post(formBody)
-        .build();
-    client.newCall(request).enqueue(callback);
-  }
-
-  public static void getJson(String url, String json, Callback callback) {
-    loggingInterceptor();
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
-    Request request = new Request.Builder()
-            .url(url)
-            .get()
-            .build();
-    client.newCall(request).enqueue(callback);
-  }
-
-  public static void postJson(String url, String json, Callback callback) {
-    loggingInterceptor();
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
-    Request request = new Request.Builder()
-        .url(url)
-        .post(requestBody)
-        .build();
-    client.newCall(request).enqueue(callback);
-  }
-
-  public static void putJson(String url, String json, Callback callback) {
-    loggingInterceptor();
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
-    Request request = new Request.Builder()
-            .url(url)
-            .put(requestBody)
-            .build();
-    client.newCall(request).enqueue(callback);
-  }
-  public static void deleteJson(String url, String json, Callback callback) {
-    loggingInterceptor();
-    RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
-    Request request = new Request.Builder()
-            .url(url)
-            .delete(requestBody)
-            .build();
-    client.newCall(request).enqueue(callback);
-  }
-
-  /**
-   * 同步
-   * @param request
-   * @return
-   * @throws IOException
-   */
-  public static String execute(Request request) throws IOException {
-    loggingInterceptor();
-    try (Response response = client.newCall(request).execute()) {
-      return response.body().string();
+    public static void get(String url, Callback callback) {
+        loggingInterceptor();
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+        client.newCall(request).enqueue(callback);
     }
-  }
 
-  public static void loggingInterceptor(){
-    //日志拦截器
-    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
-    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
-  }
+
+    public static void postForm(String url, FormBody formBody, Callback callback) {
+        loggingInterceptor();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(formBody)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void getJson(String url, String json, Callback callback) {
+        loggingInterceptor();
+        RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void postJson(String url, String json, Callback callback) {
+        loggingInterceptor();
+        RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void putJson(String url, String json, Callback callback) {
+        loggingInterceptor();
+        RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(url)
+                .put(requestBody)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void deleteJson(String url, String json, Callback callback) {
+        loggingInterceptor();
+        RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
+        Request request = new Request.Builder()
+                .url(url)
+                .delete(requestBody)
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    /**
+     * 同步
+     *
+     * @param request
+     * @return
+     * @throws IOException
+     */
+    public static String execute(Request request) {
+        loggingInterceptor();
+        try (Response response = client.newCall(request).execute()) {
+            return response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public static void loggingInterceptor() {
+        //日志拦截器
+        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+    }
 
 }

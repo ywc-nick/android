@@ -3,7 +3,7 @@
 
     <style name="MyTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
 
-        <item name="background">@android:color/white</item>
+        <item name="background">@color/background</item>
         <item name="android:windowSplashScreenBackground">@android:color/white</item><!--设置启动画面的背景色-->
         <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item><!--启动图标。就是显示在启动界面中间的图片，也可以是动画-->
         <item name="android:windowSplashScreenAnimationDuration">3000</item><!--时长-->
