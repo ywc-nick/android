@@ -18,6 +18,8 @@ public class AppCollectText implements Serializable {
 
     private Text text;//文章
 
+    private Date date;//日期
+
     @Override
     public String toString() {
         return "AppCollectText{" +
@@ -69,9 +71,6 @@ public class AppCollectText implements Serializable {
         this.text = text;
         this.date = date;
     }
-
-    private Date date;//日期
-
 
 
 }

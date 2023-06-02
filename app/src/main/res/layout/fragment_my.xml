@@ -17,11 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="搜索"
-                android:textColor="@color/black"/>
+
 
             <ImageView
                 android:layout_weight="1"
@@ -34,7 +30,7 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_marginTop="20dp"
+
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -117,25 +113,28 @@
             <TableRow
                 android:layout_marginTop="15dp">
                 <TextView
+                    android:id="@+id/fra_my_text"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="22"
+                    android:text="0"
                     android:textSize="20dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/fra_my_like"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="10"
+                    android:text="0"
                     android:textSize="20dp"
                     android:gravity="center"
                     android:layout_weight="1"
                     android:textColor="@color/black"/>
                 <TextView
+                    android:id="@+id/fra_my_collect"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:text="20"
+                    android:text="0"
                     android:textSize="20dp"
                     android:gravity="center"
                     android:layout_weight="1"
@@ -155,9 +154,9 @@
            <TextView
                android:layout_width="match_parent"
                android:layout_height="match_parent"
-               android:text="其它推荐内容"
+               android:text="点赞收藏最多的文章"
                android:textColor="@color/black"
-               android:textSize="130sp"
+               android:textSize="100sp"
                />
         </LinearLayout>
 

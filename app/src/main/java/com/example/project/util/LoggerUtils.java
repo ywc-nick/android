@@ -5,7 +5,7 @@ import android.util.Log;
 /**
  * 日志工具类
  */
-public class MyLogger {
+public class LoggerUtils {
 
     private static final String TAG = "MyAppLogger";
 

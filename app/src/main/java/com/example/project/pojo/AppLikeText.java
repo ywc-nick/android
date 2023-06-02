@@ -13,11 +13,11 @@ public class AppLikeText implements Serializable {
 
     private int id;
 
-
     private Custer custer;//客户
 
-
     private Text text;//文章
+
+    private Date date;//日期
 
     @Override
     public String toString() {
@@ -70,9 +70,6 @@ public class AppLikeText implements Serializable {
         this.text = text;
         this.date = date;
     }
-
-    private Date date;//日期
-
 
 
 }

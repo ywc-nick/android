@@ -9,6 +9,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+import okhttp3.logging.HttpLoggingInterceptor;
 
 /**
  * 该OkHttp工具类提供了三种HTTP请求的方法，分别是GET、POST表单、POST Json。
@@ -25,6 +26,7 @@ public class OkHttpUtil {
 
 
   public static void get(String url, Callback callback) {
+    loggingInterceptor();
     Request request = new Request.Builder()
         .url(url)
         .build();
@@ -33,6 +35,7 @@ public class OkHttpUtil {
 
 
   public static void postForm(String url, FormBody formBody, Callback callback) {
+    loggingInterceptor();
     Request request = new Request.Builder()
         .url(url)
         .post(formBody)
@@ -41,6 +44,7 @@ public class OkHttpUtil {
   }
 
   public static void getJson(String url, String json, Callback callback) {
+    loggingInterceptor();
     RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
             .url(url)
@@ -50,6 +54,7 @@ public class OkHttpUtil {
   }
 
   public static void postJson(String url, String json, Callback callback) {
+    loggingInterceptor();
     RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
         .url(url)
@@ -59,6 +64,7 @@ public class OkHttpUtil {
   }
 
   public static void putJson(String url, String json, Callback callback) {
+    loggingInterceptor();
     RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
             .url(url)
@@ -67,6 +73,7 @@ public class OkHttpUtil {
     client.newCall(request).enqueue(callback);
   }
   public static void deleteJson(String url, String json, Callback callback) {
+    loggingInterceptor();
     RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
     Request request = new Request.Builder()
             .url(url)
@@ -82,9 +89,16 @@ public class OkHttpUtil {
    * @throws IOException
    */
   public static String execute(Request request) throws IOException {
+    loggingInterceptor();
     try (Response response = client.newCall(request).execute()) {
       return response.body().string();
     }
+  }
+
+  public static void loggingInterceptor(){
+    //日志拦截器
+    HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
+    loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
   }
 
 }

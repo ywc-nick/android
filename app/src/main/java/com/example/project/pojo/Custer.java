@@ -2,7 +2,6 @@ package com.example.project.pojo;
 
 
 import java.io.Serializable;
-import java.sql.Date;
 
 /**
  * @Author: yangwenchuan
@@ -14,35 +13,23 @@ public class Custer implements Serializable {
 
     private int id;
 
-    private String username;
+    private String username;//用户名
 
-    private String password;
-    private String name;
+    private String password;//密码
+    private String name; //真实姓名
+    private String vir_name; //昵称
 
-    private String vir_name;
+    private String face;//头像
 
-    private String face;
+    private String sex;//1 男 2女
 
 
-    private String sex;
+    private String birth;//出生日期
+    private String phone; //手机号
+    private Long nums;//文章数
 
-    private Date birth;
 
-    @Override
-    public String toString() {
-        return "Custer{" +
-                "id=" + id +
-                ", username='" + username + '\'' +
-                ", password='" + password + '\'' +
-                ", name='" + name + '\'' +
-                ", vir_name='" + vir_name + '\'' +
-                ", face='" + face + '\'' +
-                ", sex='" + sex + '\'' +
-                ", birth=" + birth +
-                ", phone='" + phone + '\'' +
-                ", nums=" + nums +
-                '}';
-    }
+    private String imagebytes;//头像bytes数据
 
     public int getId() {
         return id;
@@ -100,11 +87,11 @@ public class Custer implements Serializable {
         this.sex = sex;
     }
 
-    public Date getBirth() {
+    public String getBirth() {
         return birth;
     }
 
-    public void setBirth(Date birth) {
+    public void setBirth(String birth) {
         this.birth = birth;
     }
 
@@ -127,7 +114,24 @@ public class Custer implements Serializable {
     public Custer() {
     }
 
-    public Custer(int id, String username, String password, String name, String vir_name, String face, String sex, Date birth, String phone, Long nums) {
+    @Override
+    public String toString() {
+        return "Custer{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", name='" + name + '\'' +
+                ", vir_name='" + vir_name + '\'' +
+                ", face='" + face + '\'' +
+                ", sex='" + sex + '\'' +
+                ", birth=" + birth +
+                ", phone='" + phone + '\'' +
+                ", nums=" + nums +
+                ", imagebytes=" +imagebytes +
+                '}';
+    }
+
+    public Custer(int id, String username, String password, String name, String vir_name, String face, String sex, String birth, String phone, Long nums, String imagebytes) {
         this.id = id;
         this.username = username;
         this.password = password;
@@ -138,10 +142,19 @@ public class Custer implements Serializable {
         this.birth = birth;
         this.phone = phone;
         this.nums = nums;
+        this.imagebytes = imagebytes;
     }
 
-    private String phone;
-    private Long nums;//文章数
+    public String getImagebytes() {
+        return imagebytes;
+    }
+
+    public void setImagebytes(String imagebytes) {
+        this.imagebytes = imagebytes;
+    }
+
+
+
 
 
 }
