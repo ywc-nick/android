@@ -44,26 +44,19 @@ public class RecommendFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_recommend, container, false);
         init();
         test();
-        savedInstanceStateInit(savedInstanceState);
+        setData();
         initTabLayout();
         return view;
     }
 
-    public void savedInstanceStateInit(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            // 如果 savedInstanceState 为 null，说明是第一次创建，
-            // 此时创建 Fragment 并添加到List集合中
-            fragmentsList = new ArrayList<>();
-            for (int i = 0; i < list.size(); i++) {
-                fragmentsList.add(new KindFragment());
-            }
-            replaceFragment(fragmentsList.get(0));
-        } else {
-            // 如果 savedInstanceState 不为 null，说明之前已经有一个 Fragment，
-            // 此时根据 savedInstanceState 中保存的 Fragment 索引找到对应的 Fragment 并还原状态
-            int position = savedInstanceState.getInt("position");
-            replaceFragment(fragmentsList.get(position));
+    public void setData() {
+
+        fragmentsList = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            fragmentsList.add(new KindFragment());
         }
+        replaceFragment(fragmentsList.get(0));
+
     }
 
     /**
@@ -124,6 +117,10 @@ public class RecommendFragment extends Fragment {
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -136,7 +133,7 @@ public class RecommendFragment extends Fragment {
     @Override
     public void onDestroy() {
         super.onDestroy();
-        LoggerUtils.e("RecommendFragment已销毁");
+        LoggerUtils.e("RecommendFragment销毁");
     }
 
     public void replaceFragment(Fragment fragment) {

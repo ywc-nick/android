@@ -11,6 +11,7 @@ import android.widget.LinearLayout;
 
 import com.example.project.fragment.HomeFragment;
 import com.example.project.fragment.MyFragment;
+import com.example.project.util.LoggerUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,26 +33,16 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         init();
         //判断是不是再次进入
-        savedInstanceStateInit(savedInstanceState);
+        setData();
         //初始进入首页
-
-
     }
 
-    public void savedInstanceStateInit(Bundle savedInstanceState) {
-        if (savedInstanceState == null) {
-            // 如果 savedInstanceState 为 null，说明是第一次创建，
-            // 此时创建 Fragment 并添加到List集合中
-            fragmentsList = new ArrayList<>();
-            fragmentsList.add(new HomeFragment());
-            fragmentsList.add(new MyFragment());
-            replaceFragment(fragmentsList.get(0));
-        } else {
-            // 如果 savedInstanceState 不为 null，说明之前已经有一个 Fragment，
-            // 此时根据 savedInstanceState 中保存的 Fragment 索引找到对应的 Fragment 并还原状态
-            int position = savedInstanceState.getInt("position");
-            replaceFragment(fragmentsList.get(position));
-        }
+    public void setData() {
+
+        fragmentsList = new ArrayList<>();
+        fragmentsList.add(new HomeFragment());
+        fragmentsList.add(new MyFragment());
+        replaceFragment(fragmentsList.get(0));
     }
 
     public void init() {
@@ -80,18 +71,10 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        // 保存当前 Fragment 索引
-        outState.putInt("position", posit);
-    }
 
     public void replaceFragment(Fragment fragment) {
         //1. 获取碎片管理器
         fm = getSupportFragmentManager();
-
         //2. 开启碎片事务
         ft = fm.beginTransaction();
         //3. 替换碎片
@@ -99,5 +82,7 @@ public class MainActivity extends AppCompatActivity {
         //4. 提交事务
         ft.commit();
     }
+
+
 
 }
