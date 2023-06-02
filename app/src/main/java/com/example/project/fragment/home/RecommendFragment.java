@@ -2,16 +2,19 @@ package com.example.project.fragment.home;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
-import androidx.viewpager.widget.ViewPager;
+
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.project.R;
+import com.example.project.fragment.HomeFragment;
+import com.example.project.fragment.MyFragment;
 import com.example.project.util.LoggerUtils;
 import com.google.android.material.tabs.TabLayout;
 
@@ -23,24 +26,17 @@ public class RecommendFragment extends Fragment {
 
 
     View view;//容器视图
-
     TabLayout tableLayout;
 
 
     //碎片管理器
     FragmentManager fm;
     FragmentTransaction ft;
-
-    public static final String recommend = "推荐";
-    public static final String hot = "热门";
-    public static final String topList = "排行";
-    public static final String List1 = "排榜";
-    public static final String topList2 = "排榜";
-    public static final String topList3 = "行榜";
-    public static final String topList4 = "排榜";
+    int posit;//碎片和tablayout的位置
 
 
-    public static List<String> list = new ArrayList();
+    public static List<String> list;
+    List<Fragment> fragmentsList;//碎片集合，不用每次都new，可替换旧的
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -48,15 +44,41 @@ public class RecommendFragment extends Fragment {
         view = inflater.inflate(R.layout.fragment_recommend, container, false);
         init();
         test();
+        savedInstanceStateInit(savedInstanceState);
         initTabLayout();
         return view;
     }
 
+    public void savedInstanceStateInit(Bundle savedInstanceState) {
+        if (savedInstanceState == null) {
+            // 如果 savedInstanceState 为 null，说明是第一次创建，
+            // 此时创建 Fragment 并添加到List集合中
+            fragmentsList = new ArrayList<>();
+            for (int i = 0; i < list.size(); i++) {
+                fragmentsList.add(new KindFragment());
+            }
+            replaceFragment(fragmentsList.get(0));
+        } else {
+            // 如果 savedInstanceState 不为 null，说明之前已经有一个 Fragment，
+            // 此时根据 savedInstanceState 中保存的 Fragment 索引找到对应的 Fragment 并还原状态
+            int position = savedInstanceState.getInt("position");
+            replaceFragment(fragmentsList.get(position));
+        }
+    }
 
     /**
      * 测试数据
      */
     private void test() {
+        list = new ArrayList();
+        String recommend = "推荐";
+        String hot = "热门";
+        String topList = "排行";
+        String List1 = "排榜";
+        String topList2 = "排榜";
+        String topList3 = "行榜";
+        String topList4 = "排榜";
+
         list.add(recommend);
         list.add(hot);
         list.add(topList);
@@ -76,17 +98,17 @@ public class RecommendFragment extends Fragment {
 
     public void initTabLayout() {
 
+        LoggerUtils.i(list.size() + "");
         for (int i = 0; i < list.size(); i++) {
-            tableLayout.addTab(tableLayout.newTab().setText(list.get(i)));
+            tableLayout.addTab(tableLayout.newTab().setText(list.get(i)).setTag(i));//tag设为下标
             LoggerUtils.i(list.get(i) + " " + i);
         }
         tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        replaceFragment(new KindFragment());
-
         tableLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                replaceFragment(new KindFragment());
+                posit = (Integer) tab.getTag();
+                replaceFragment(fragmentsList.get(posit));
             }
 
             @Override
@@ -102,13 +124,31 @@ public class RecommendFragment extends Fragment {
 
     }
 
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        // 保存当前 Fragment 索引
+        outState.putInt("position", posit);
+
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        LoggerUtils.e("RecommendFragment已销毁");
+    }
+
     public void replaceFragment(Fragment fragment) {
         //1. 获取碎片管理器
         fm = getChildFragmentManager();
         //2. 开启碎片事务
         ft = fm.beginTransaction();
+
         //3. 替换碎片
-        ft.replace(R.id.fra_recommend_blank, fragment, null);
+        ft.replace(R.id.fra_recommend_blank, fragment);
+        LoggerUtils.i("碎片已替换");
+
         //4. 提交事务
         ft.commit();
     }
