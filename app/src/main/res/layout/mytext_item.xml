@@ -3,14 +3,15 @@
 
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_marginTop="15dp"
+    android:orientation="vertical"
+    >
 
     <LinearLayout
+
         android:layout_width="match_parent"
         android:layout_height="140dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="5dp"
-        android:layout_marginRight="10dp"
+        android:layout_marginTop="20dp"
         android:orientation="horizontal">
 
         <CheckBox
@@ -49,7 +50,7 @@
                     android:layout_weight="8"
                     android:maxWidth="100dp"
                     android:text="题目"
-                    android:textSize="24dp"
+                    android:textSize="21dp"
                     android:textStyle="bold" />
 
             </LinearLayout>
