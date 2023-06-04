@@ -43,6 +43,13 @@ public class Text implements Serializable {
     public Text() {
     }
 
+    public Text(String theme, String article, int knums, int cnums) {
+        this.theme = theme;
+        this.article = article;
+        this.knums = knums;
+        this.cnums = cnums;
+    }
+
     public int getTid() {
         return tid;
     }

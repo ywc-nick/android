@@ -1,6 +1,7 @@
 package com.example.project.adapter;
 
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -12,6 +13,7 @@ import com.example.project.pojo.Text;
 import com.example.project.util.LoggerUtils;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class TextItemAdapter extends BaseAdapter {
@@ -22,15 +24,15 @@ public class TextItemAdapter extends BaseAdapter {
     Context context;
     List<Text> texts;
 
-    public TextItemAdapter(Context context, List<Text> texts){
+    public TextItemAdapter(Context context){
         super();
         this.context = context;
-        this.texts = texts;
+
     }
 
     @Override
     public int getCount() {
-        if (texts==null){
+        if (texts==null||texts.isEmpty()){
             return 0;
         }
         LoggerUtils.i(",,,,,",texts.toString());
@@ -60,18 +62,27 @@ public class TextItemAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null){
+
+            convertView =  LayoutInflater.from(context).inflate( R.layout.mytext_item,parent,false);
+//            convertView = View.inflate(context, R.layout.mytext_item,parent);
             init(convertView);
-            convertView = View.inflate(context, R.layout.mytext_item,parent);
         }
-        setData(texts.get(position));
+        if (texts!=null&&!texts.isEmpty()){
+            setText(texts.get(position));
+        }
+
         return convertView;
     }
 
-    private void setData(Text text1) {
+    private void setText(Text text1) {
         text.setText(text1.getArticle());
         title.setText(text1.getTheme());
-        like.setText(text1.getKnums());
-        collect.setText(text1.getCnums());
+        like.setText(String.valueOf(text1.getKnums()));
+        collect.setText(String.valueOf(text1.getCnums()));
+    }
+
+    public void setData(List<Text> texts) {
+        this.texts = texts;
     }
 
 
