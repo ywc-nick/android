@@ -22,7 +22,6 @@ public class SharedPreferencesUtils {
     public static Map getSharePreferences(Context context){
 
         sharedPreferences = context.getSharedPreferences(SHARE_NAEM, Context.MODE_PRIVATE);
-        String username = sharedPreferences.getString("username",null);
         Map map = new HashMap();
         map.put(ID,sharedPreferences.getInt(ID,0));
         map.put(USERNAME,sharedPreferences.getString(USERNAME,null));

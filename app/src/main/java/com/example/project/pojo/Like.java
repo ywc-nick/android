@@ -11,30 +11,90 @@ import java.util.Date;
 
 public class Like implements Serializable {
 
-    private int id;
+    private int tid;
 
-    private Custer custer;//客户
+    private Kind kind;
 
-    private Text text;//文章
 
-    private Date date;//日期
+    private String theme;
+
+    private String article;
+
+    private int knums;  //点赞数 热门
+    private int cnums;   //收藏数 推荐
+
+
+    private Date c_date;//创建日期
+    private Custer custer;//用户
 
     @Override
     public String toString() {
-        return "AppLikeText{" +
-                "id=" + id +
+        return "Like{" +
+                "tid=" + tid +
+                ", kind=" + kind +
+                ", theme='" + theme + '\'' +
+                ", article='" + article + '\'' +
+                ", knums=" + knums +
+                ", cnums=" + cnums +
+                ", c_date=" + c_date +
                 ", custer=" + custer +
-                ", text=" + text +
-                ", date=" + date +
                 '}';
     }
 
-    public int getId() {
-        return id;
+    public int getTid() {
+        return tid;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setTid(int tid) {
+        this.tid = tid;
+    }
+
+    public Kind getKind() {
+        return kind;
+    }
+
+    public void setKind(Kind kind) {
+        this.kind = kind;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
+    }
+
+    public String getArticle() {
+        return article;
+    }
+
+    public void setArticle(String article) {
+        this.article = article;
+    }
+
+    public int getKnums() {
+        return knums;
+    }
+
+    public void setKnums(int knums) {
+        this.knums = knums;
+    }
+
+    public int getCnums() {
+        return cnums;
+    }
+
+    public void setCnums(int cnums) {
+        this.cnums = cnums;
+    }
+
+    public Date getC_date() {
+        return c_date;
+    }
+
+    public void setC_date(Date c_date) {
+        this.c_date = c_date;
     }
 
     public Custer getCuster() {
@@ -45,31 +105,17 @@ public class Like implements Serializable {
         this.custer = custer;
     }
 
-    public Text getText() {
-        return text;
-    }
-
-    public void setText(Text text) {
-        this.text = text;
-    }
-
-    public Date getDate() {
-        return date;
-    }
-
-    public void setDate(Date date) {
-        this.date = date;
+    public Like(int tid, Kind kind, String theme, String article, int knums, int cnums, Date c_date, Custer custer) {
+        this.tid = tid;
+        this.kind = kind;
+        this.theme = theme;
+        this.article = article;
+        this.knums = knums;
+        this.cnums = cnums;
+        this.c_date = c_date;
+        this.custer = custer;
     }
 
     public Like() {
     }
-
-    public Like(int id, Custer custer, Text text, Date date) {
-        this.id = id;
-        this.custer = custer;
-        this.text = text;
-        this.date = date;
-    }
-
-
 }

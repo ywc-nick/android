@@ -23,7 +23,6 @@ public class Custer implements Serializable {
 
     private String sex;//1 男 2女
 
-
     private String birth;//出生日期
     private String phone; //手机号
     private Long nums;//文章数
@@ -127,7 +126,7 @@ public class Custer implements Serializable {
                 ", birth=" + birth +
                 ", phone='" + phone + '\'' +
                 ", nums=" + nums +
-                ", imagebytes=" +imagebytes +
+                ", imagebytes=" + imagebytes +
                 '}';
     }
 
@@ -152,9 +151,6 @@ public class Custer implements Serializable {
     public void setImagebytes(String imagebytes) {
         this.imagebytes = imagebytes;
     }
-
-
-
 
 
 }
