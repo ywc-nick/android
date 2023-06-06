@@ -108,7 +108,7 @@ public class MyFragment extends Fragment {
      * 填充数据
      */
     public void dataFill(){
-        //TODO 从共享首选项中拿取id
+
 
         Map map = SharedPreferencesUtils.getSharePreferences(getContext());
         Integer id = (Integer) map.get(SharedPreferencesUtils.ID);
@@ -116,7 +116,7 @@ public class MyFragment extends Fragment {
         if (id == 0){
             return;
         }
-        url = "http://10.0.2.2:8080/qianxun/app1/custer/" + id;
+        url =OkHttpUtil.baseUrl+"/custer/" + id;
         OkHttpUtil.get(url, new Callback(){
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -141,7 +141,7 @@ public class MyFragment extends Fragment {
             }
         });
 
-        url = "http://10.0.2.2:8080/qianxun/app1/other/" + id;
+        url =OkHttpUtil.baseUrl+ "/other/" + id;
         OkHttpUtil.get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {

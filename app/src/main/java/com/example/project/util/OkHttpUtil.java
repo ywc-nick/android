@@ -32,6 +32,15 @@ public class OkHttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void delete(String url, Callback callback) {
+        loggingInterceptor();
+        Request request = new Request.Builder()
+                .url(url)
+                .delete()
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
 
     public static void postForm(String url, FormBody formBody, Callback callback) {
         loggingInterceptor();

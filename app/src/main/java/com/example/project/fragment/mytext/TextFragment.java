@@ -11,6 +11,8 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.CheckBox;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -40,7 +42,7 @@ import okhttp3.Response;
 
 public class TextFragment extends Fragment implements TextItemAdapter.TextFresh {
 
-//    SwipeRefreshLayout refreshLayout;
+    SwipeRefreshLayout refreshLayout;
     ListView listView;
     List<Text> texts ;
     TextItemAdapter adapter;
@@ -63,18 +65,29 @@ public class TextFragment extends Fragment implements TextItemAdapter.TextFresh 
         adapter.setData(data);
         adapter.setRefreshData(this);
         listView.setAdapter(adapter);// 将适配器装入ListView对象
+        refreshLayout.setRefreshing(false);//顶置转圈
 
     }
 
     public void init(View view) {
         listView = view.findViewById(R.id.fra_text_listview);
-//        refreshLayout = view.findViewById(R.id.fra_text_refressh);
-//        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+        refreshLayout = view.findViewById(R.id.fra_text_refressh);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+               setInitData(); //刷新数据
+            }
+        });
+
+//        listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
 //            @Override
-//            public void onRefresh() {
-//                refreshData(); //刷新数据
+//            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+//               CheckBox checkBox = view.findViewById(R.id.mytext_item_check);
+//               checkBox.setVisibility(View.INVISIBLE);
+//                return true;
 //            }
 //        });
+
     }
 
 //    private void refreshData() {
@@ -96,7 +109,7 @@ public class TextFragment extends Fragment implements TextItemAdapter.TextFresh 
         Integer id = (Integer) map.get(SharedPreferencesUtils.ID);
 
         Gson gson = new Gson();
-        String url = "http://10.0.2.2:8080/qianxun/app1/text/custer/" + id;
+        String url = OkHttpUtil.baseUrl+"/text/custer/" + id;
 
         OkHttpUtil.get(url, new Callback() {
                     @Override
@@ -110,8 +123,7 @@ public class TextFragment extends Fragment implements TextItemAdapter.TextFresh 
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Type type = new TypeToken<List<Text>>() {
-                                }.getType();//指定合适的 Type 类型
+                                Type type = new TypeToken<List<Text>>() {}.getType();//指定合适的 Type 类型
                                 texts = gson.fromJson(info, type);
                                 LoggerUtils.i("+TextFragment", texts.toString());
                                 adapter.setData(texts);

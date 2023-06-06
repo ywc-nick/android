@@ -15,12 +15,9 @@ public class Text implements Serializable {
 
     private int tid; //主键
 
-    private String kind; //类型
+    private Kind kind; //类型
 
     private String theme; //题目
-
-    private String describle; //描述
-
 
     private String article; //文章
 
@@ -30,12 +27,6 @@ public class Text implements Serializable {
 
     private String c_date;//创建日期
 
-    private String isAnon;//0为匿名
-
-    //重复无用，但必须和后端一致，没办法
-    private String username;//绑定用户名
-
-    private String virname; //呢称
 
     private Custer custer;//用户  一对一
 
@@ -58,11 +49,11 @@ public class Text implements Serializable {
         this.tid = tid;
     }
 
-    public String getKind() {
+    public Kind getKind() {
         return kind;
     }
 
-    public void setKind(String kind) {
+    public void setKind(Kind kind) {
         this.kind = kind;
     }
 
@@ -74,13 +65,6 @@ public class Text implements Serializable {
         this.theme = theme;
     }
 
-    public String getDescrible() {
-        return describle;
-    }
-
-    public void setDescrible(String describle) {
-        this.describle = describle;
-    }
 
     public String getArticle() {
         return article;
@@ -114,30 +98,6 @@ public class Text implements Serializable {
         this.c_date = c_date;
     }
 
-    public String getIsAnon() {
-        return isAnon;
-    }
-
-    public void setIsAnon(String isAnon) {
-        this.isAnon = isAnon;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getVirname() {
-        return virname;
-    }
-
-    public void setVirname(String virname) {
-        this.virname = virname;
-    }
-
 
     @Override
     public String toString() {
@@ -145,14 +105,12 @@ public class Text implements Serializable {
                 "tid=" + tid +
                 ", kind='" + kind + '\'' +
                 ", theme='" + theme + '\'' +
-                ", describle='" + describle + '\'' +
+
                 ", article='" + article + '\'' +
                 ", knums=" + knums +
                 ", cnums=" + cnums +
                 ", c_date=" + c_date +
-                ", isAnon='" + isAnon + '\'' +
-                ", username='" + username + '\'' +
-                ", virname='" + virname + '\'' +
+
                 ", custer=" + custer +
                 '}';
     }
@@ -165,18 +123,16 @@ public class Text implements Serializable {
         this.custer = custer;
     }
 
-    public Text(int tid, String kind, String theme, String describle, String article, int knums, int cnums, String c_date, String isAnon, String username, String virname, Custer custer) {
+    public Text(int tid, Kind kind, String theme, String describle, String article, int knums, int cnums, String c_date,  Custer custer) {
         this.tid = tid;
         this.kind = kind;
         this.theme = theme;
-        this.describle = describle;
+
         this.article = article;
         this.knums = knums;
         this.cnums = cnums;
         this.c_date = c_date;
-        this.isAnon = isAnon;
-        this.username = username;
-        this.virname = virname;
+
         this.custer = custer;
     }
 
