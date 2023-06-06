@@ -4,9 +4,11 @@ import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.project.R;
 import com.google.android.material.snackbar.Snackbar;
 
 public class DialogUtils {
@@ -67,6 +69,14 @@ public class DialogUtils {
                 .setTitle(title)
                 .setMessage(message)
                 .setPositiveButton(android.R.string.ok, listener)
+                .setNegativeButton(android.R.string.cancel, null);
+        builder.create().show();
+    }
+
+    public static void showConfirmDialogDelete(Context context, String message, DialogInterface.OnClickListener listener) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(context)
+                .setMessage(message)
+                .setPositiveButton("删除", listener)
                 .setNegativeButton(android.R.string.cancel, null);
         builder.create().show();
     }

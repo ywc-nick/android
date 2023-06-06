@@ -14,15 +14,20 @@ public class Collect implements Serializable {
 
     private int id;
 
+
     private Custer custer;//客户
+
 
     private Text text;//文章
 
-    private Date date;//日期
+
+
+    private String date;//日期
+
 
     @Override
     public String toString() {
-        return "AppCollectText{" +
+        return "Collect{" +
                 "id=" + id +
                 ", custer=" + custer +
                 ", text=" + text +
@@ -54,23 +59,21 @@ public class Collect implements Serializable {
         this.text = text;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 
     public Collect() {
     }
 
-    public Collect(int id, Custer custer, Text text, Date date) {
+    public Collect(int id, Custer custer, Text text, String date) {
         this.id = id;
         this.custer = custer;
         this.text = text;
         this.date = date;
     }
-
-
 }

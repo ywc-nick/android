@@ -6,13 +6,16 @@
     android:orientation="vertical"
     tools:context=".fragment.home.HotFragment">
 
-
-    <TextView
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:textColor="@color/black"
+    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/fra_hot_refresh_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="HotFragment" />
+        android:layout_height="match_parent">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/fra_hot_recy"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+    </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 </LinearLayout>

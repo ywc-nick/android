@@ -7,6 +7,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.example.project.fragment.HomeFragment;
@@ -20,12 +21,12 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout home, my;
-
+    ImageView homeimage,myimage;
     //碎片管理器
     FragmentManager fm;
     FragmentTransaction ft;
 
-    int posit;//标记上一次碎片的位置
+    int posit = 0;//标记上一次碎片的位置
     List<Fragment> fragmentsList;//碎片集合，不用每次都new，可替换旧的
 
     // Todo
@@ -50,9 +51,12 @@ public class MainActivity extends AppCompatActivity {
         fragmentsList.add(new HomeFragment());
         fragmentsList.add(new MyFragment());
         replaceFragment(fragmentsList.get(0));
+        imageChange();
     }
 
     public void init() {
+        homeimage = findViewById(R.id.act_main_home_image);
+        myimage = findViewById(R.id.act_main_my_image);
         home = findViewById(R.id.act_main_home);
         my = findViewById(R.id.act_main_my);
 
@@ -68,16 +72,29 @@ public class MainActivity extends AppCompatActivity {
             switch (v.getId()) {
                 case R.id.act_main_home:
                     posit = 0;
+                    imageChange();
                     replaceFragment(fragmentsList.get(posit));
                     break;
                 case R.id.act_main_my:
                     posit = 1;
+                    imageChange();
                     replaceFragment(fragmentsList.get(posit));
                     break;
             }
         }
     };
 
+    public void imageChange(){
+        if (posit==0){
+            homeimage.setImageResource(R.drawable.homeselected);
+            myimage.setImageResource(R.drawable.my);
+        }else {
+            homeimage.setImageResource(R.drawable.home);
+            myimage.setImageResource(R.drawable.myselected);
+        }
+
+
+    }
 
     public void replaceFragment(Fragment fragment) {
         //1. 获取碎片管理器

@@ -1,39 +1,49 @@
 package com.example.project.adapter;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.CheckBox;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.example.project.R;
 import com.example.project.pojo.Text;
+import com.example.project.util.DialogUtils;
 import com.example.project.util.LoggerUtils;
 import com.example.project.util.OkHttpUtil;
+import com.example.project.util.SharedPreferencesUtils;
 
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class TextItemAdapter extends BaseAdapter {
 
 
     Context context;
-    List<Text> texts;
+    List<Text> texts = new ArrayList<>();
     //删除元素tid集合
-
+    //接口对象
+    private TextFresh textFresh;
     public TextItemAdapter(Context context) {
         super();
         this.context = context;
@@ -42,8 +52,8 @@ public class TextItemAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        if (texts == null || texts.isEmpty()) {
-            return 0;
+        if (texts==null||texts.isEmpty()) {
+            return 1;
         }
 //        LoggerUtils.i(",,,,,",texts.toString());
         return texts.size();
@@ -51,7 +61,10 @@ public class TextItemAdapter extends BaseAdapter {
 
     @Override
     public Object getItem(int position) {
-        return texts.get(position);
+        if (!texts.isEmpty()&&texts!=null) {
+            return texts.get(position);
+        }
+        return new Text();
     }
 
     @Override
@@ -79,25 +92,15 @@ public class TextItemAdapter extends BaseAdapter {
 
     public void remove(int position) {
         int id = texts.get(position).getTid();
-        deleteById(id);
-        texts.remove(position);
-        notifyDataSetChanged();
-    }
+        DialogUtils.showConfirmDialogDelete(context, "确定删除此文章吗", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                texts.remove(position);
+                notifyDataSetChanged();
+                textFresh.sendDeleteTid(id);
+            }
+        });
 
-    public void deleteById(int tid){
-        String url = OkHttpUtil.baseUrl+"/text/" + tid;
-            OkHttpUtil.delete(url, new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    LoggerUtils.i("数据获取失败！");
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    String result = response.body().string();
-
-                }
-            });
     }
 
 
@@ -137,11 +140,10 @@ public class TextItemAdapter extends BaseAdapter {
 
     //声明刷新总价接口
     public interface TextFresh {
-        void refreshPrice(List<Text> texts);
+        void sendDeleteTid(int tid);
     }
 
-    //接口对象
-    private TextFresh textFresh;
+
 
     public void setRefreshData(TextFresh textFresh) {
         this.textFresh = textFresh;

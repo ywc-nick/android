@@ -21,11 +21,14 @@ public class OkHttpUtil {
     //url前缀只需后面添加
     public static String baseUrl = "http://10.0.2.2:8080/qianxun/app";
 
-    private static final OkHttpClient client = new OkHttpClient();
+    public static String NO = "no";//返回的响应
+    public static String OK = "ok";
 
+    private static final OkHttpClient client = new OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor())
+            .build();
 
     public static void get(String url, Callback callback) {
-        loggingInterceptor();
         Request request = new Request.Builder()
                 .url(url)
                 .build();
@@ -33,7 +36,6 @@ public class OkHttpUtil {
     }
 
     public static void delete(String url, Callback callback) {
-        loggingInterceptor();
         Request request = new Request.Builder()
                 .url(url)
                 .delete()
@@ -43,7 +45,6 @@ public class OkHttpUtil {
 
 
     public static void postForm(String url, FormBody formBody, Callback callback) {
-        loggingInterceptor();
         Request request = new Request.Builder()
                 .url(url)
                 .post(formBody)
@@ -52,7 +53,6 @@ public class OkHttpUtil {
     }
 
     public static void getJson(String url, String json, Callback callback) {
-        loggingInterceptor();
         RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
         Request request = new Request.Builder()
                 .url(url)
@@ -62,7 +62,6 @@ public class OkHttpUtil {
     }
 
     public static void postJson(String url, String json, Callback callback) {
-        loggingInterceptor();
         RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
         Request request = new Request.Builder()
                 .url(url)
@@ -72,7 +71,6 @@ public class OkHttpUtil {
     }
 
     public static void putJson(String url, String json, Callback callback) {
-        loggingInterceptor();
         RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
         Request request = new Request.Builder()
                 .url(url)
@@ -82,7 +80,6 @@ public class OkHttpUtil {
     }
 
     public static void deleteJson(String url, String json, Callback callback) {
-        loggingInterceptor();
         RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
         Request request = new Request.Builder()
                 .url(url)
@@ -99,7 +96,7 @@ public class OkHttpUtil {
      * @throws IOException
      */
     public static String execute(Request request) {
-        loggingInterceptor();
+
         try (Response response = client.newCall(request).execute()) {
             return response.body().string();
         } catch (IOException e) {
@@ -108,10 +105,31 @@ public class OkHttpUtil {
         return null;
     }
 
-    public static void loggingInterceptor() {
+    public static HttpLoggingInterceptor loggingInterceptor() {
         //日志拦截器
         HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor();
         loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        return loggingInterceptor;
     }
+
+
+
+    //        // 向服务器发送 HTTP 请求
+//        OkHttpClient client = new OkHttpClient();
+//        Request request = new Request.Builder()
+//                .url("http://example.com/api/update")  // 假设服务器 API 地址为 http://example.com/api/update
+//                .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), mDataList.toString()))
+//                .build();
+//        try {
+//            Response response = client.newCall(request).execute();
+//            if (response.isSuccessful()) {
+//                // 更新成功
+//            } else {
+//                // 更新失败，处理异常
+//            }
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//        return true;
 
 }

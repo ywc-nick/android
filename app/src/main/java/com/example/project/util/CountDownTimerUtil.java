@@ -21,6 +21,7 @@ public class CountDownTimerUtil extends CountDownTimer {
         timeBtn = button;
     }
 
+
     //计时过程
     @Override
     public void onTick(long l) {

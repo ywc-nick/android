@@ -1,39 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:background="@color/background"
+    android:orientation="vertical"
     tools:context=".activity.MyTextActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginRight="10dp"
         android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
         android:orientation="vertical">
+
         <FrameLayout
-            android:background="@color/white"
-            android:layout_marginTop="25dp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            android:background="@color/white">
+
             <ImageView
                 android:id="@+id/act_my_text_back"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@drawable/back"
+                android:layout_gravity="left|center_vertical"
                 android:layout_marginLeft="10dp"
-                android:layout_gravity="left|center_vertical"/>
+                android:src="@drawable/back" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="我的"
-                android:textSize="40sp"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:textStyle="bold"/>
+                android:text="我的"
+                android:textSize="40sp"
+                android:textStyle="bold" />
         </FrameLayout>
 
         <LinearLayout
@@ -41,36 +44,45 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:orientation="vertical">
+
             <com.google.android.material.tabs.TabLayout
-                android:background="@color/white"
                 android:id="@+id/act_my_text_tablayout"
                 android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_gravity="start"
-                app:tabSelectedTextColor="@color/blue"
-                app:tabTextColor="@color/black"
+                android:background="@color/white"
                 app:tabMode="scrollable"
+                app:tabSelectedTextColor="@color/blue"
 
-                android:layout_height="wrap_content"/>
+                app:tabTextColor="@color/black" />
+
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:background="@color/gray"
-                />
+                android:background="@color/gray" />
 
-            <androidx.viewpager.widget.ViewPager
-                android:layout_weight="10"
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginTop="20dp"
+                android:layout_weight="10"
                 android:background="@drawable/listradius"
-                android:id="@+id/act_my_text_viewpager"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:orientation="vertical">
+
+                <androidx.viewpager.widget.ViewPager
+                    android:layout_marginTop="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:id="@+id/act_my_text_viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
             <TextView
-                android:layout_weight="6"
                 android:layout_width="match_parent"
-                android:layout_height="100dp"/>
+                android:layout_height="100dp"
+                android:layout_weight="6" />
         </LinearLayout>
     </LinearLayout>
-
 
 
 </LinearLayout>

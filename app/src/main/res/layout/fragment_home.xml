@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+
     tools:context=".fragment.HomeFragment">
 
 
@@ -20,24 +21,22 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             >
-            <SearchView
-                android:id="@+id/search_view"
+            <ImageView
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:layout_gravity="center|left"
+                android:layout_marginLeft="15dp"
+                android:src="@drawable/search"/>
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="40dp"
+                android:textSize="18sp"
+                android:gravity="center"
                 android:background="@drawable/shape_life_search"
-                android:iconifiedByDefault="false"
-                android:textColor="#000000"
-                android:queryHint="输入搜索内容"
-                android:textColorHint="#292828"
-                 />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="搜索"
-                android:textColor="@color/blue"
-                android:textSize="20dp"
-                android:layout_marginRight="30dp"
-                android:layout_gravity="right|center"/>
+                android:textColor="@color/gray"
+                android:layout_gravity="center"
+                android:text="请输入搜索内容"/>
+
 
         </FrameLayout>
 

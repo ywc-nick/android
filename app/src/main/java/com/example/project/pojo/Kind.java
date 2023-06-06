@@ -1,5 +1,6 @@
 package com.example.project.pojo;
 
+
 import java.io.Serializable;
 
 /**
@@ -8,21 +9,10 @@ import java.io.Serializable;
  * Discretion:
  */
 
-
 public class Kind implements Serializable {
-
 
     private int kid;
     private String content;
-
-
-    public Kind(int kid, String content) {
-        this.kid = kid;
-        this.content = content;
-    }
-
-    public Kind() {
-    }
 
     public Kind(String content) {
         this.content = content;
@@ -50,6 +40,14 @@ public class Kind implements Serializable {
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public Kind(int kid, String content) {
+        this.kid = kid;
+        this.content = content;
+    }
+
+    public Kind() {
     }
 }
 
