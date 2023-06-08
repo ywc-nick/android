@@ -21,7 +21,6 @@ public class Collect implements Serializable {
     private Text text;//文章
 
 
-
     private String date;//日期
 
 

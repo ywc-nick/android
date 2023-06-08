@@ -17,6 +17,7 @@ import android.widget.Toast;
 
 import com.example.project.R;
 import com.example.project.adapter.TextItemAdapter;
+import com.example.project.pojo.Collect;
 import com.example.project.pojo.Like;
 import com.example.project.pojo.Text;
 import com.example.project.util.LoggerUtils;
@@ -35,7 +36,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class CollectFragment extends Fragment implements TextItemAdapter.TextFresh{
+public class CollectFragment extends Fragment implements TextItemAdapter.TextFresh {
 
 
     SwipeRefreshLayout refreshLayout;
@@ -64,6 +65,7 @@ public class CollectFragment extends Fragment implements TextItemAdapter.TextFre
             }
         }
     };
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -118,14 +120,16 @@ public class CollectFragment extends Fragment implements TextItemAdapter.TextFre
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                Type type = new TypeToken<List<Like>>() {
+                                Type type = new TypeToken<List<Collect>>() {
                                 }.getType();//指定合适的 Type 类型
                                 if (info != null && !("".equals(info))) {
-                                    List<Like> likeList = gson.fromJson(info, type);
-                                    for (Like like : likeList) {
-                                        texts.add(like.getText());
-                                    }
+                                    List<Collect> collects = gson.fromJson(info, type);
 
+                                    List<Text> temp = new ArrayList<>();
+                                    for (Collect collect : collects) {
+                                        temp.add(collect.getText());
+                                    }
+                                    texts = temp;
                                     LoggerUtils.i("+CollectFragment", texts.toString());
                                     Message successMessage = mHandler.obtainMessage(0);
                                     mHandler.sendMessage(successMessage);

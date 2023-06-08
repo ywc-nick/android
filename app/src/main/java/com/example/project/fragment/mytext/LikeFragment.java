@@ -121,11 +121,12 @@ public class LikeFragment extends Fragment implements TextItemAdapter.TextFresh 
                                 }.getType();//指定合适的 Type 类型
                                 if (info != null && !("".equals(info))) {
                                     List<Like> likeList = gson.fromJson(info, type);
+                                    ArrayList<Text> temp = new ArrayList<>();
                                     for (Like like : likeList) {
-                                        texts.add(like.getText());
+                                        temp.add(like.getText());
                                     }
-
-                                    LoggerUtils.i("+TextFragment", texts.toString());
+                                    texts = temp;
+                                    LoggerUtils.i("+TextFragment", LikeFragment.this.texts.toString());
                                     Message successMessage = mHandler.obtainMessage(0);
                                     mHandler.sendMessage(successMessage);
                                 }

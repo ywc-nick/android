@@ -17,7 +17,6 @@ public class Like implements Serializable {
     private Custer custer;//客户
     private Text text;//文章
 
-
     private String date;//日期
 
     public Like() {
