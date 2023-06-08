@@ -3,12 +3,12 @@
 
     <style name="MyTheme" parent="Theme.MaterialComponents.NoActionBar.Bridge">
 
-        <item name="background">@color/background</item>
-        <item name="android:windowSplashScreenBackground">@android:color/white</item><!--设置启动画面的背景色-->
-        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher_foreground</item><!--启动图标。就是显示在启动界面中间的图片，也可以是动画-->
+        <item name="background">@color/blue</item>
+        <item name="android:windowSplashScreenBackground">@android:color/holo_blue_light</item><!--设置启动画面的背景色-->
+        <item name="android:windowSplashScreenAnimatedIcon">@drawable/ic_launcher1_foreground</item><!--启动图标。就是显示在启动界面中间的图片，也可以是动画-->
         <item name="android:windowSplashScreenAnimationDuration">3000</item><!--时长-->
-        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_launcher_background</item><!-- 设置要显示在启动画面底部的图片。-->
-        <item name="android:windowSplashScreenIconBackgroundColor">#ff0000</item><!-- 设置启动图标的背景色-->
+        <item name="android:windowSplashScreenBrandingImage">@drawable/ic_launcher4_foreground</item><!-- 设置要显示在启动画面底部的图片。-->
+        <item name="android:windowSplashScreenIconBackgroundColor">#FFFCFC</item><!-- 设置启动图标的背景色-->
         <item name="android:textColor">@color/black</item>
         <item name="android:editTextColor">@android:color/black</item>
         <item name="android:textColorHint">@android:color/darker_gray</item>
