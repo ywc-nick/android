@@ -178,14 +178,6 @@
                 android:textColor="@android:color/black"
                 android:textSize="12sp" />
 
-            <ImageView
-                android:id="@+id/im_save"
-                android:layout_marginLeft="20dp"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:onClick="btn_save"
-                android:src="@drawable/save"
-                tools:ignore="OnClick" />
 
         </LinearLayout>
 

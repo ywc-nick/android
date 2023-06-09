@@ -9,10 +9,10 @@ import android.widget.CursorAdapter;
 import android.widget.TextView;
 
 public class SearchHistoryAdapter extends CursorAdapter {
-
     public SearchHistoryAdapter(Context context, Cursor c) {
-        super(context, c, 0);
+        super(context, c);
     }
+
 
     @Override
     public View newView(Context context, Cursor cursor, ViewGroup parent) {

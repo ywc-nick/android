@@ -43,10 +43,6 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ArticleActivity extends AppCompatActivity {
 
-    SQLiteOpenHelper sqLiteDbHelper;
-
-    OkHttpUtil okHttpUtil = new OkHttpUtil();
-
     private ImageView Im_save, Im_like, Im_favorite;
     private EditText et_title, et_content;
     private TextView author, publish_time, likes_num, favorites_num;
@@ -67,7 +63,7 @@ public class ArticleActivity extends AppCompatActivity {
     }
 
         public void init(){
-            Im_save = findViewById(R.id.im_save);
+
             Im_like = findViewById(R.id.im_like);
             Im_favorite = findViewById(R.id.im_favorite);
 
@@ -279,9 +275,7 @@ public class ArticleActivity extends AppCompatActivity {
 
     public void btnReturn_detail(View view){
 
-        Intent intent=new Intent(this, MainActivity.class);
-
-        startActivity(intent);
+        finish();
 
     }
 }
