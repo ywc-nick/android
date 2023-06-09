@@ -16,6 +16,7 @@
         android:orientation="vertical">
 
         <FrameLayout
+            android:id="@+id/fra_search_frame"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
@@ -36,8 +37,6 @@
                 android:textColor="@color/gray"
                 android:layout_gravity="center"
                 android:text="请输入搜索内容"/>
-
-
         </FrameLayout>
 
 

@@ -1,5 +1,6 @@
 package com.example.project.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,8 +9,10 @@ import androidx.viewpager.widget.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import com.example.project.R;
+import com.example.project.activity.SearchActivity;
 import com.example.project.adapter.MyFraAdapter;
 import com.example.project.fragment.home.HotFragment;
 import com.example.project.fragment.home.RecommendFragment;
@@ -35,6 +38,8 @@ public class HomeFragment extends Fragment {
     TabLayout tableLayout;
     ViewPager viewPager;
 
+    FrameLayout frameLayout;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +54,14 @@ public class HomeFragment extends Fragment {
     private void init() {
         tableLayout = view.findViewById(R.id.fra_home_tablayout);
         viewPager = view.findViewById(R.id.fra_home_viewpager);
+        frameLayout = view.findViewById(R.id.fra_search_frame);
+        frameLayout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), SearchActivity.class);
+                startActivity(intent);
+            }
+        });
     }
     public void initData(){
         fragments = new ArrayList<>();

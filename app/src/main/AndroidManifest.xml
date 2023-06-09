@@ -12,14 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/MyTheme"
         android:usesCleartextTraffic="true">
-
+        <activity
+            android:name=".activity.SearchActivity"
+            android:exported="false" />
         <activity
             android:name=".activity.MyTextActivity"
             android:exported="false" />
-        <activity android:name=".activity.PublishActivity"
-            android:exported="false"/>
-        <activity android:name=".activity.ArticleActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".activity.PublishActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ArticleActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
