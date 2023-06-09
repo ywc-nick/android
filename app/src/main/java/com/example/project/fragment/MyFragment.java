@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.os.Parcelable;
 import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.example.project.R;
+import com.example.project.activity.ArticleActivity;
 import com.example.project.activity.MyTextActivity;
 import com.example.project.adapter.TextHistoryAdapter;
 import com.example.project.pojo.Collect;
@@ -91,7 +93,17 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
     private void initHistory(View view) {
 
         listView= view.findViewById(R.id.fra_my_list);
-
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!texts.isEmpty()){
+                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                    intent.putExtra("tid",texts.get(position).getTid());
+                    LoggerUtils.i("MyFragment",position+"");
+                    getActivity().startActivity(intent);
+                }
+            }
+        });
         textHistoryAdapter = new TextHistoryAdapter(getContext(),texts,this);
         query();
 
@@ -119,29 +131,29 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
 
 
     }
-//
-//    @Override
-//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-//        super.onViewCreated(view, savedInstanceState);
-//        //ToDo
-//        textHistoryDao = new TextHistoryDao(getContext());
-//        textHistoryDao.insert(new TextHistoryBean("12fgddfg31",80));
-//        textHistoryDao.insert(new TextHistoryBean("1fadf1",100));
-//        textHistoryDao.insert(new TextHistoryBean("1fafffnndfdf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1ffggouaggdddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1ffggouoaggdddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1ffggauououggdddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1ffggaggdddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1fndneradddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1faderrqddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1fadddsdf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("f",0));
-//        textHistoryDao.insert(new TextHistoryBean("fyury",0));
-//        textHistoryDao.insert(new TextHistoryBean("jjf",0));
-//        textHistoryDao.insert(new TextHistoryBean("1fadddf1",0));
-//        textHistoryDao.insert(new TextHistoryBean("1farerqvfbf1",100));
-//
-//    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        //ToDo
+        textHistoryDao = new TextHistoryDao(getContext());
+        textHistoryDao.insert(new TextHistoryBean(1,"12fgddfg31",80));
+        textHistoryDao.insert(new TextHistoryBean(2,"1fadf1",100));
+        textHistoryDao.insert(new TextHistoryBean(3,"1fafffnndfdf1",0));
+        textHistoryDao.insert(new TextHistoryBean(5,"1ffggouaggdddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(4,"1ffggouoaggdddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(6,"1ffggauououggdddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(7,"1ffggaggdddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(8,"1fndneradddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(9,"1faderrqddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(10,"1fadddsdf1",0));
+        textHistoryDao.insert(new TextHistoryBean(11,"f",0));
+        textHistoryDao.insert(new TextHistoryBean(12,"fyury",0));
+        textHistoryDao.insert(new TextHistoryBean(13,"jjf",0));
+        textHistoryDao.insert(new TextHistoryBean(14,"1fadddf1",0));
+        textHistoryDao.insert(new TextHistoryBean(15,"1farerqvfbf1",100));
+
+    }
 
     public void init( View view){
         image = view.findViewById(R.id.fra_my_image);

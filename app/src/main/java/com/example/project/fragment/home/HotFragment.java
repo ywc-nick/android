@@ -1,5 +1,6 @@
 package com.example.project.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.example.project.activity.ArticleActivity;
 import com.example.project.adapter.TextAdapter;
 import com.example.project.pojo.Text;
 import com.example.project.util.LoggerUtils;
@@ -34,7 +36,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class HotFragment extends Fragment {
+public class HotFragment extends Fragment implements TextAdapter.ItemClickInterface{
 
 
     Boolean option = false;
@@ -93,7 +95,7 @@ public class HotFragment extends Fragment {
         refresh();//下拉替换
         recyclerView = view.findViewById(R.id.fra_hot_recy);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));//new LinearLayoutManager(getContext()// 创建一个垂直方向的布局管理器
-        adapter = new TextAdapter(getActivity(),dataList);
+        adapter = new TextAdapter(getActivity(),dataList,this);
         recyclerView.setAdapter(adapter);
 
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -169,5 +171,12 @@ public class HotFragment extends Fragment {
         super.onDestroy();
         // 在 Fragment 销毁时，移除所有消息，防止 Activity 调用已经销毁的 Fragment 的 Handler ，防止内存泄漏
         mHandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void onItemClick(int position, Text text) {
+        Intent intent = new Intent(getActivity(), ArticleActivity.class);
+        intent.putExtra("text",text);
+        getActivity().startActivity(intent);
     }
 }

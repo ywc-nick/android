@@ -19,12 +19,14 @@ public class TextHistoryDao {
     //列名
 
     public static final String TEXT_ID = "t_id";
+    public static final String ID = "id";
     public static final String RATE = "rate";
     public static final String TITLE = "title";
     public static final String TIME = "time";
 
     public static final String CREATE_TABLE_MEMO = "create table " + TABLE_NAME +
-            " (" + TEXT_ID + " integer primary key AUTOINCREMENT, "
+            " (" + ID + " integer primary key AUTOINCREMENT, "
+            + TEXT_ID + " integer, "
             + RATE + " integer, "
             + TITLE + " text unique,"
             + TIME + " TIMESTAMP OT NULL DEFAULT (datetime(CURRENT_TIMESTAMP, 'localtime')) );";
@@ -45,8 +47,10 @@ public class TextHistoryDao {
     //插入
     public Long insert(TextHistoryBean textHistory){
         ContentValues cv = new ContentValues();
-        cv.put(TITLE, textHistory.title);
-        cv.put(RATE, textHistory.rate);
+        cv.put(TEXT_ID, textHistory.getTid());
+        cv.put(TITLE, textHistory.getTitle());
+        cv.put(TEXT_ID, textHistory.getTid());
+        cv.put(RATE, textHistory.getRate());
         Long l = null;
         try {
             //使用 onConflict 关键字的 insert() 方法可以在插入发生冲突时，直接执行更新操作，而不是抛出异常
@@ -60,16 +64,17 @@ public class TextHistoryDao {
     //查询
     public List<TextHistoryBean> queryAll() {
         String[] columns = new String[]{
-                TEXT_ID,TITLE,TIME,RATE
+                ID,TEXT_ID,TITLE,TIME,RATE
         };
         Cursor query = db.query(false, TABLE_NAME, columns, null, null, null, null, null, null);
         List<TextHistoryBean> list = new ArrayList<>();
         while (query.moveToNext()) {
+            int id = query.getInt(query.getColumnIndexOrThrow(ID));
             int tid = query.getInt(query.getColumnIndexOrThrow(TEXT_ID));
             Integer rate = query.getInt(query.getColumnIndexOrThrow(RATE));
             String title = query.getString(query.getColumnIndexOrThrow(TITLE));
             String time = TimeUtils.timestampToString(query.getType(query.getColumnIndexOrThrow(TIME)));
-            list.add(new TextHistoryBean(tid,title, time ,rate));
+            list.add(new TextHistoryBean(id,title, time ,rate,tid));
         }
         return list;
     }
@@ -80,7 +85,7 @@ public class TextHistoryDao {
     //4.delete
     public int delete(int id) {
         //1.where子句
-        String whereClause = TEXT_ID + "=?";
+        String whereClause = ID + "=?";
         //2.whereArgs
         String[] whereArgs = {String.valueOf(id)};
         return db.delete(TABLE_NAME, whereClause, whereArgs);
@@ -89,7 +94,7 @@ public class TextHistoryDao {
     //4.delete
     public void deleteList(List<Integer> list) {
 
-        String whereClause = TEXT_ID + "=?";
+        String whereClause = ID + "=?";
 
         String[] whereArgs;
         for (Integer id:list){

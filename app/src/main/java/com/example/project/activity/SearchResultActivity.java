@@ -35,7 +35,7 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-public class SearchResultActivity extends AppCompatActivity {
+public class SearchResultActivity extends AppCompatActivity implements TextAdapter.ItemClickInterface{
 
     ImageView back;
     TextView searchText;
@@ -71,7 +71,7 @@ public class SearchResultActivity extends AppCompatActivity {
         back.setOnClickListener(listener);
         searchText.setOnClickListener(listener);
 
-        adapter = new TextAdapter(this,dataList);
+        adapter = new TextAdapter(this,dataList,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -162,4 +162,11 @@ public class SearchResultActivity extends AppCompatActivity {
             }
         }
     };
+
+    @Override
+    public void onItemClick(int position, Text text) {
+        Intent intent = new Intent(this, ArticleActivity.class);
+        intent.putExtra("text",text);
+        startActivity(intent);
+    }
 }

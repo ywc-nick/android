@@ -1,11 +1,23 @@
 package com.example.project.sqlite.pojo;
 
-public class TextHistoryBean {
+import java.io.Serializable;
 
-    public int tid;
-    public String title;
-    public String time;
-    public Integer rate;
+public class TextHistoryBean implements Serializable {
+
+    private int tid;
+    private String title;
+    private String time;
+    private Integer rate;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
 
     @Override
     public String toString() {
@@ -49,18 +61,20 @@ public class TextHistoryBean {
         this.rate = rate;
     }
 
-    public TextHistoryBean(String title, Integer rate) {
+    public TextHistoryBean(int tid,String title, Integer rate) {
         this.title = title;
         this.rate = rate;
+        this.tid = tid;
     }
 
     public TextHistoryBean() {
     }
 
-    public TextHistoryBean(int tid, String title, String timestamp, Integer rate) {
+    public TextHistoryBean(Integer id, String title, String time, Integer rate, int tid) {
         this.tid = tid;
         this.title = title;
-        this.time = timestamp;
+        this.time = time;
         this.rate = rate;
+        this.id = id;
     }
 }

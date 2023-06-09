@@ -94,13 +94,6 @@ public class RecommendFragment extends Fragment implements KindFragment.KindInte
         }
 
 
-        List<Handler> handlerList = new ArrayList<>();
-//        for (Fragment fragment : fragmentsList) {
-//            Handler handler = fragment.getView().getHandler();
-//            handlerList.add(handler);
-//        }
-
-
 
         replaceFragment(fragmentsList.get(0));
 

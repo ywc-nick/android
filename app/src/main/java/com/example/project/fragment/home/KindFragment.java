@@ -1,5 +1,6 @@
 package com.example.project.fragment.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -17,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.example.project.activity.ArticleActivity;
 import com.example.project.adapter.TextAdapter;
 import com.example.project.pojo.Text;
 import com.example.project.util.LoggerUtils;
@@ -34,7 +36,7 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class KindFragment extends Fragment {
+public class KindFragment extends Fragment implements TextAdapter.ItemClickInterface{
 
     RecyclerView recyclerView;
     TextAdapter adapter;
@@ -84,7 +86,7 @@ public class KindFragment extends Fragment {
 
     private void init(View view) {
         recyclerView = view.findViewById(R.id.fra_kind_recy);
-        adapter = new TextAdapter(getActivity(),texts);
+        adapter = new TextAdapter(getActivity(),texts,this);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
@@ -143,6 +145,13 @@ public class KindFragment extends Fragment {
         super.onDestroy();
         texts.clear();
         mHandler.removeCallbacksAndMessages(null);
+    }
+
+    @Override
+    public void onItemClick(int position, Text text) {
+        Intent intent = new Intent(getActivity(), ArticleActivity.class);
+        intent.putExtra("text",text);
+        getActivity().startActivity(intent);
     }
 
     public interface KindInterface {

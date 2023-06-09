@@ -141,9 +141,9 @@ public class TextItemAdapter extends BaseAdapter {
     //声明刷新总价接口
     public interface TextFresh {
         void sendDeleteTid(int tid);
+
+//        void  setClickText(Text text);
     }
-
-
 
     public void setRefreshData(TextFresh textFresh) {
         this.textFresh = textFresh;

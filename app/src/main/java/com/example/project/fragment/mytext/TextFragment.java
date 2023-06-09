@@ -1,5 +1,6 @@
 package com.example.project.fragment.mytext;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -12,10 +13,12 @@ import android.os.Message;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.project.R;
+import com.example.project.activity.ArticleActivity;
 import com.example.project.adapter.TextItemAdapter;
 import com.example.project.pojo.Text;
 import com.example.project.util.LoggerUtils;
@@ -88,6 +91,17 @@ public class TextFragment extends Fragment implements TextItemAdapter.TextFresh 
 
     public void init(View view) {
         listView = view.findViewById(R.id.fra_text_listview);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!texts.isEmpty()){
+                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                    intent.putExtra("text",texts.get(position));
+                    LoggerUtils.i("TextFragment",position+"");
+                    getActivity().startActivity(intent);
+                }
+            }
+        });
         refreshLayout = view.findViewById(R.id.fra_text_refressh);
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override

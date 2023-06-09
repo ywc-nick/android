@@ -43,7 +43,7 @@ import okhttp3.logging.HttpLoggingInterceptor;
 
 public class ArticleActivity extends AppCompatActivity {
 
-    private ImageView Im_save, Im_like, Im_favorite;
+    private ImageView Im_like, Im_favorite;
     private EditText et_title, et_content;
     private TextView author, publish_time, likes_num, favorites_num;
 
@@ -54,12 +54,19 @@ public class ArticleActivity extends AppCompatActivity {
 
     Gson gson = new Gson();
 
+    Text text;//获取传递过来的数据
+    Integer tid;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_article);
         init();
         getInformation();
+        text= (Text) getIntent().getSerializableExtra("text");//获取传递过来的数据
+        tid = getIntent().getIntExtra("tid",0);//获取传递过来的数据
+//        LoggerUtils.i("ArticleActivity",text.toString());
+        LoggerUtils.i("ArticleActivity================",tid+"");
     }
 
         public void init(){
@@ -75,9 +82,8 @@ public class ArticleActivity extends AppCompatActivity {
             likes_num = findViewById(R.id.tv_likes_num);
             favorites_num = findViewById(R.id.tv_favorites_num);
 
-            Im_save.setOnClickListener((View.OnClickListener) this);
-            Im_like.setOnClickListener((View.OnClickListener) this);
-            Im_favorite.setOnClickListener((View.OnClickListener) this);
+//            Im_like.setOnClickListener((View.OnClickListener) this);
+//            Im_favorite.setOnClickListener((View.OnClickListener) this);
 
         }
 
@@ -237,8 +243,6 @@ public class ArticleActivity extends AppCompatActivity {
 //        String id=intent.getStringExtra("id");
         Map map = SharedPreferencesUtils.getSharePreferences(getApplicationContext());
         Integer id = (Integer) map.get(SharedPreferencesUtils.ID);
-
-
         if (id == 0){
             return;
         }
@@ -252,13 +256,13 @@ public class ArticleActivity extends AppCompatActivity {
 
                     @Override
                     public void run() {
-                        Text text = gson.fromJson(info,Text.class);
-                        //textView.setText(custer.getNums().toString());
-                        author.setText(text.getCuster().toString());
-                        et_title.setText(text.getTheme().toString());
-                        et_content.setText(text.getArticle().toString());
-                        likes_num.setText(text.getKnums());
-                        favorites_num.setText(text.getCnums());
+//                        Text text = gson.fromJson(info,Text.class);
+//                        //textView.setText(custer.getNums().toString());
+//                        author.setText(text.getCuster().toString());
+//                        et_title.setText(text.getTheme().toString());
+//                        et_content.setText(text.getArticle().toString());
+//                        likes_num.setText(text.getKnums());
+//                        favorites_num.setText(text.getCnums());
                     }
                 });
             }

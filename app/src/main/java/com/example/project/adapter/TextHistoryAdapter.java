@@ -104,7 +104,7 @@ public class TextHistoryAdapter extends BaseAdapter {
     }
 
     private void setText(ViewHolder holder, int position) {
-        holder.title.setText(texts.get(position).title);
+        holder.title.setText(texts.get(position).getTitle());
         holder.time.setText(texts.get(position).getTime());
         holder.rate.setText(String.valueOf(texts.get(position).getRate()));
 

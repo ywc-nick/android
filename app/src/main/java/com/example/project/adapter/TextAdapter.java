@@ -21,10 +21,13 @@ import com.example.project.util.TimeUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> {
+public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> implements View.OnClickListener{
 
     Context context;
     List<Text> texts = new ArrayList<>();
+    ItemClickInterface itemClickInterface;
+    Text text = new Text();//传递的数据
+    int post;//当前数据位置
 
     public void setTexts(List<Text> texts) {
         this.texts = texts;
@@ -33,22 +36,30 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
     public TextAdapter() {
     }
 
-    public TextAdapter(Context context, List<Text> texts) {
+    public TextAdapter(Context context, List<Text> texts, ItemClickInterface itemClickInterface) {
         this.context = context;
         this.texts = texts;
+        this.itemClickInterface = itemClickInterface;
     }
 
     //获取视图
     @Override
     public int getItemViewType(int position) {
+        if (!texts.isEmpty()&&texts!=null){
+            text = texts.get(position);//赋值
+            post = position;
+        }
         return super.getItemViewType(position);
     }
+
+
 
     @NonNull
     @Override
     public TextViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.text_item, parent, false);
+        itemView.setOnClickListener(this);
         return new TextViewHolder(itemView);
     }
 
@@ -80,6 +91,15 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
         notifyItemRangeInserted(oldDataSize, newDataSize);//Todo
     }
 
+    @Override
+    public void onClick(View v) {
+        if (!texts.isEmpty()&&texts!=null&&itemClickInterface!=null){
+            itemClickInterface.onItemClick(post,text);
+        }
+    }
+
+
+
 
     public class TextViewHolder extends RecyclerView.ViewHolder {
 
@@ -108,5 +128,12 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
             collect.setText(String.valueOf(text.getKnums()));
             date.setText(TimeUtils.TimestampToDateString(text.getC_date()));
         }
+    }
+
+
+
+    //传送数据
+    public interface ItemClickInterface {
+        void onItemClick(int position,Text text);
     }
 }
