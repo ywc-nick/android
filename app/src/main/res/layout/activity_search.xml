@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/background">
+    android:background="@color/background"
+    tools:context=".activity.SearchActivity"
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -37,17 +39,17 @@
                     android:layout_marginRight="20dp">
 
                     <EditText
-                        android:paddingStart="20dp"
                         android:id="@+id/search_box"
-                        android:focusable="true"
                         android:layout_width="318dp"
                         android:layout_height="40dp"
                         android:layout_gravity="center"
                         android:background="@drawable/shape_life_search"
+                        android:focusable="true"
                         android:hint="输入搜索内容"
                         android:imeOptions="actionSearch"
                         android:inputType="text"
                         android:padding="8dp"
+                        android:paddingStart="20dp"
                         android:singleLine="true" />
 
                     <TextView
@@ -68,43 +70,61 @@
     </LinearLayout>
 
 
-    <View
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:layout_marginTop="16dp"
-        android:background="@android:color/darker_gray" />
+        android:layout_height="match_parent"
+        android:padding="10dp"
+        android:background="@android:color/darker_gray"
+        android:orientation="vertical">
+
         <LinearLayout
-            android:id="@+id/history_linera"
-            android:visibility="gone"
-            android:layout_width="wrap_content"
-            android:orientation="vertical"
-            android:layout_height="wrap_content">
-            <Button
-                android:id="@+id/clear_history_button"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginLeft="320dp"
-                android:layout_marginTop="8dp"
-                android:background="@drawable/shape_life_search"
-                android:enabled="false"
-                android:text="清空历史记录"
-                android:textSize="10sp" />
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal">
 
-            <ListView
-                android:id="@+id/search_history"
-                android:layout_width="wrap_content"
-                android:layout_height="150dp"
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="left"
+                android:layout_marginLeft="10dp"
+                android:layout_weight="1"
+                android:gravity="center|left"
+                android:text="搜索记录"
+                android:textColor="@color/gray" />
 
-                android:layout_marginTop="8dp"
-                android:divider="@android:color/darker_gray"
-                android:dividerHeight="1dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="10dp"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/act_search_clear_all"
+                    android:layout_width="20dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_height="25dp"
+                    android:alpha="0.4"
+                    android:background="@drawable/deleteimage"
+                    android:layout_gravity="right|center"
+                    />
+            </LinearLayout>
 
         </LinearLayout>
-    <ListView
-        android:id="@+id/search_result_listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/gray"/>
 
+        <ListView
+            android:id="@+id/search_history"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:divider="@android:color/darker_gray"
+             />
+
+
+    </LinearLayout>
 </LinearLayout>
 

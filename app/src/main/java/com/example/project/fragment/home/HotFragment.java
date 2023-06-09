@@ -101,13 +101,12 @@ public class HotFragment extends Fragment {
             public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
                 if (newState == RecyclerView.SCROLL_STATE_IDLE) {
-                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                    int lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();
-                    int itemCount = linearLayoutManager.getItemCount();
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();//获取布局管理器
+                    int lastVisiblePosition = linearLayoutManager.findLastCompletelyVisibleItemPosition();//最后一项
+                    int itemCount = linearLayoutManager.getItemCount();//item总数
                     if (lastVisiblePosition == (itemCount - 1)) {
                         option = true;
                         requestData();
-
                     }
                 }
             }
@@ -141,11 +140,6 @@ public class HotFragment extends Fragment {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         String info = response.body().string();
-
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-
                                 Type type = new TypeToken<List<Text>>() {}.getType();//指定合适的 Type 类型
                                 try {
                                     dataList= gson.fromJson(info, type);
@@ -163,8 +157,7 @@ public class HotFragment extends Fragment {
                                     // 处理 JsonSyntaxException 异常
                                     LoggerUtils.e( "Failed to parse JSON string", e.toString());
                                 }
-                            }
-                        });
+
                     }
                 }
 

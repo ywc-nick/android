@@ -19,9 +19,6 @@ public class SearchHistoryAdapter extends CursorAdapter {
         LayoutInflater inflater = LayoutInflater.from(context);
         View view = inflater.inflate(android.R.layout.simple_list_item_1, parent, false);
 
-        ViewGroup.LayoutParams layoutParams = view.getLayoutParams();
-        layoutParams.height = 100;
-        view.setLayoutParams(layoutParams);
         return view;
     }
 

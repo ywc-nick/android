@@ -1,24 +1,26 @@
-package com.example.project.fragment.home;
-
-import android.os.Bundle;
+package com.example.project.activity;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.project.R;
 import com.example.project.adapter.TextAdapter;
 import com.example.project.pojo.Text;
+import com.example.project.util.DialogUtils;
 import com.example.project.util.LoggerUtils;
 import com.example.project.util.OkHttpUtil;
 import com.google.gson.Gson;
@@ -33,59 +35,44 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+public class SearchResultActivity extends AppCompatActivity {
 
-public class KindFragment extends Fragment {
-
+    ImageView back;
+    TextView searchText;
     RecyclerView recyclerView;
+
     TextAdapter adapter;
-    List<Text> texts;
-    Integer kid;//每个类型的id
-    int currentPage;
-
-    KindInterface kindInterface;
+    private List<Text> dataList =new ArrayList<>() ;
+    private int currentPage = 1;
+    String result;//搜索结果内容
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        kid = getArguments().getInt("kind");
+        setContentView(R.layout.activity_search_result);
+        init();
+        // 获取携带搜索结果的 Intent 实例
+        result = getIntent().getStringExtra("result");
+        searchText.setText(result);
+
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        texts = new ArrayList<>();
-        currentPage =1;
-        View view =  inflater.inflate(R.layout.fragment_kind, container, false);
-        init(view);
+    protected void onStart() {
+        super.onStart();
         requestData();
-        return view;
     }
 
+    public void init(){
+        back = findViewById(R.id.iv_search_res_back_image);
+        searchText = findViewById(R.id.iv_search_res_back_text);
+        recyclerView = findViewById(R.id.act_search_recview);
 
-    Handler mHandler =new Handler(Looper.getMainLooper()) {
-        @Override
-        public void handleMessage(Message msg) {
-            super.handleMessage(msg);
-            switch (msg.what) {
-                case 1:
-                    if (!texts.isEmpty()){
-                        adapter.updateData(texts);
-                        adapter.notifyDataSetChanged();
-                        LoggerUtils.i("+KindFragment+"+kid, texts.toString());
-                    }else {
-                        Toast.makeText(getActivity(), "已经到底了！！！", Toast.LENGTH_SHORT).show();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        }
-    };
+        back.setOnClickListener(listener);
+        searchText.setOnClickListener(listener);
 
-    private void init(View view) {
-        recyclerView = view.findViewById(R.id.fra_kind_recy);
-        adapter = new TextAdapter(getActivity(),texts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        adapter = new TextAdapter(this,dataList);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplication()));
         recyclerView.setAdapter(adapter);
         recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
@@ -101,12 +88,12 @@ public class KindFragment extends Fragment {
                 }
             }
         });
+
     }
 
     private void requestData() {
-//        kindInterface.sendToParent(kid,texts);
         Gson gson = new Gson();
-        String url = OkHttpUtil.baseUrl+"/text/kind/"+kid+ "/"+ currentPage;
+        String url = OkHttpUtil.baseUrl+"/text/search/"+result+ "/"+ currentPage;
         OkHttpUtil.get(url, new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -120,7 +107,7 @@ public class KindFragment extends Fragment {
                         String info = response.body().string();
                         Type type = new TypeToken<List<Text>>() {}.getType();//指定合适的 Type 类型
                         try {
-                            texts= gson.fromJson(info, type);
+                            dataList= gson.fromJson(info, type);
                             Message successMessage = mHandler.obtainMessage(1);
                             currentPage++;
                             mHandler.sendMessage(successMessage);
@@ -136,16 +123,43 @@ public class KindFragment extends Fragment {
         );
     }
 
-
+    Handler mHandler =new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    if (!dataList.isEmpty()){
+                        adapter.updateData(dataList);
+                        adapter.notifyDataSetChanged();
+                        LoggerUtils.i("+SearchResultActivity", dataList.toString());
+                    }else {
+                        Toast.makeText(getApplication(), "已经到底了！！！", Toast.LENGTH_SHORT).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
-    public void onDestroy() {
+    protected void onDestroy() {
         super.onDestroy();
-        texts.clear();
         mHandler.removeCallbacksAndMessages(null);
     }
 
-    public interface KindInterface {
-        void sendToParent(int kid, List<Text> textsData);
-    }
+    View.OnClickListener listener = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()){
+                case R.id.iv_search_res_back_image:
+                    finish();
+                    break;
+                case R.id.iv_search_res_back_text:
+                    finish();
+                    break;
+            }
+        }
+    };
 }

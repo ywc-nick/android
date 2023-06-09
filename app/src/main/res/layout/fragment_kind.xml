@@ -6,12 +6,10 @@
     tools:context=".fragment.home.KindFragment">
 
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_marginTop="20dp"
+        android:id="@+id/fra_kind_recy"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="kindfragment1" />
-  
+        android:layout_height="match_parent"/>
 
 </LinearLayout>
