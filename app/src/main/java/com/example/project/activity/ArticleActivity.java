@@ -20,8 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.project.MainActivity;
 import com.example.project.R;
-import com.example.project.sqlite.TextMethod;
-import com.example.project.pojo.Custer;
 import com.example.project.pojo.Text;
 import com.example.project.util.LoggerUtils;
 import com.example.project.util.OkHttpUtil;
@@ -66,7 +64,6 @@ public class ArticleActivity extends AppCompatActivity {
         setContentView(R.layout.activity_article);
         init();
         getInformation();
-        save();
     }
 
         public void init(){
@@ -90,9 +87,6 @@ public class ArticleActivity extends AppCompatActivity {
 
         public void onClick(View v) {
             switch (v.getId()){
-                case R.id.im_save:
-                    save();
-                    break;
                 case R.id.im_like:
                     like();
                     break;
@@ -279,40 +273,6 @@ public class ArticleActivity extends AppCompatActivity {
         });
         }
 
-
-
-
-    //保存到手机
-    public void save() {
-        SQLiteDatabase db = sqLiteDbHelper.getWritableDatabase();
-
-        TextMethod textMethod = new TextMethod(db);
-
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd");// HH:mm:ss
-
-        Date date = new Date(System.currentTimeMillis());
-
-
-        String dates = simpleDateFormat.format(date);
-
-        String title = et_title.getText().toString();
-
-        String context = et_content.getText().toString();
-
-        Text text = new Text();
-
-        text.setC_date(dates);
-
-        text.setTheme(title);
-
-        text.setArticle(context);
-
-        textMethod.save(text);
-
-        Toast.makeText(ArticleActivity.this, "保存成功！", Toast.LENGTH_LONG).show();
-
-
-    }
 
 
     //返回按钮
