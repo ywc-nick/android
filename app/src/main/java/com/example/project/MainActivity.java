@@ -5,11 +5,13 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.example.project.activity.PublishActivity;
 import com.example.project.fragment.HomeFragment;
 import com.example.project.fragment.MyFragment;
 import com.example.project.util.LoggerUtils;
@@ -21,7 +23,7 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     LinearLayout home, my;
-    ImageView homeimage,myimage;
+    ImageView homeimage,myimage, publish;
     //碎片管理器
     FragmentManager fm;
     FragmentTransaction ft;
@@ -43,6 +45,14 @@ public class MainActivity extends AppCompatActivity {
 
         setData();
         //初始进入首页
+
+        publish.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(MainActivity.this, PublishActivity.class);
+                startActivity(intent);
+            }
+        });
     }
 
     public void setData() {
@@ -57,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
     public void init() {
         homeimage = findViewById(R.id.act_main_home_image);
         myimage = findViewById(R.id.act_main_my_image);
+        publish = findViewById(R.id.im_publish);
         home = findViewById(R.id.act_main_home);
         my = findViewById(R.id.act_main_my);
 
