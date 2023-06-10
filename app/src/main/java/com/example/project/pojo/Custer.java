@@ -14,15 +14,11 @@ public class Custer implements Serializable {
     private int id;
 
     private String username;//用户名
-
     private String password;//密码
     private String name; //真实姓名
     private String vir_name; //昵称
-
     private String face;//头像
-
     private String sex;//1 男 2女
-
     private String birth;//出生日期
     private String phone; //手机号
     private Long nums;//文章数

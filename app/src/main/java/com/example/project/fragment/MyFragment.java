@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import com.example.project.R;
 import com.example.project.activity.ArticleActivity;
+import com.example.project.activity.InfoActivity;
 import com.example.project.activity.LoginActivity;
 import com.example.project.activity.MyTextActivity;
 import com.example.project.activity.RegisterActivity;
@@ -66,7 +67,7 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
 
     ImageView image;//头像
     TextView nickname, likeView, collectView, textView;//昵称
-    FrameLayout login;
+    FrameLayout info;
 
     ListView listView;
     ImageView allDelete, setting;
@@ -121,14 +122,14 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
         textView = view.findViewById(R.id.fra_my_text);
         collectView = view.findViewById(R.id.fra_my_collect);
         likeView = view.findViewById(R.id.fra_my_like);
-        login = view.findViewById(R.id.fra_my_login);
+        info = view.findViewById(R.id.fra_my_info);
         setting = view.findViewById(R.id.fra_my_setting);
 
         setting.setOnClickListener(listener);
         collectView.setOnClickListener(listener);
         likeView.setOnClickListener(listener);
         textView.setOnClickListener(listener);
-        login.setOnClickListener(listener);
+        info.setOnClickListener(listener);
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -153,8 +154,8 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
                     intent.putExtra(opt, 2);
                     startActivity(intent);
                     break;
-                case R.id.fra_my_login:
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                case R.id.fra_my_info:
+                    startActivity(new Intent(getActivity(), InfoActivity.class));
                     break;
                 case R.id.fra_my_setting:
                     startActivity(new Intent(getActivity(), RegisterActivity.class));
@@ -214,7 +215,7 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
 
 
     }
-
+//
 //    @Override
 //    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
 //        super.onViewCreated(view, savedInstanceState);
@@ -243,7 +244,6 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
      * 填充数据
      */
     public void dataFill() {
-
 
         Map map = SharedPreferencesUtils.getSharePreferences(getContext());
         Integer id = (Integer) map.get(SharedPreferencesUtils.ID);

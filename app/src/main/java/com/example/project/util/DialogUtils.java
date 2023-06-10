@@ -62,13 +62,13 @@ public class DialogUtils {
      * @param context  上下文对象
      * @param title    标题
      * @param message  提示消息
-     * @param listener 确认操作执行的监听器
+     * @param postListener 确认操作执行的监听器
      */
-    public static void showConfirmDialog(Context context, String title, String message, DialogInterface.OnClickListener listener) {
+    public static void showConfirmDialog(Context context, String title, String message, DialogInterface.OnClickListener postListener) {
         AlertDialog.Builder builder = new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton(android.R.string.ok, listener)
+                .setPositiveButton(android.R.string.ok, postListener)
                 .setNegativeButton(android.R.string.cancel, null);
         builder.create().show();
     }

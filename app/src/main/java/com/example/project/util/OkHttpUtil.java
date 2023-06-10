@@ -3,6 +3,8 @@ package com.example.project.util;
 import com.example.project.pojo.Custer;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 import okhttp3.Callback;
@@ -56,27 +58,86 @@ public class OkHttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
+    public static void putFormAddImage(String url, String filename, Callback callback) {
+        File file = new File(filename);
+
+        byte[] data = new byte[(int) file.length()];
+        FileInputStream input = null;
+        try {
+            input = new FileInputStream(file);
+            input.read(data);
+            input.close();
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        RequestBody requestBody = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM)
+                .addFormDataPart("image", file.getName(),
+                        RequestBody.create(MediaType.parse("image/jpeg"), data))
+                .build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)//一般填充请求体
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
     public static void postFormAddImage(String url, String filename, Custer custer, Callback callback) {
 
-//        @RequestParam("username") String username,
-//        @RequestParam("password") String password, @RequestParam("nickname") String nickname,
-//        @RequestParam("imagePath") String imagePath,@RequestParam("phone") String phone)
+//        (@RequestParam(value = "image",defaultValue = "null") MultipartFile image,
+//                @RequestParam(value = "username",defaultValue = "null") String username,
+//                @RequestParam(value = "password",defaultValue = "null") String password,
+//                @RequestParam(value = "nickname",defaultValue = "null") String nickname,
+//                @RequestParam(value = "imageName",defaultValue = "null") String imageName,
+//                @RequestParam(value = "sex",defaultValue = "null") String sex,
+//                @RequestParam(value = "birth",defaultValue = "null") String birth,
+//                @RequestParam(value = "phone",defaultValue = "null") String phone)
         RequestBody requestBody;
         MultipartBody.Builder builder = new MultipartBody.Builder()
                 .setType(MultipartBody.FORM);
-        if (filename!=null) {
+        if (filename != null) {
             File file = new File(filename);
-            builder.addFormDataPart("image", filename,
-                    RequestBody.create(MediaType.parse("multipart/form-data"), file.getName()))
+            byte[] data = new byte[(int) file.length()];
+            FileInputStream input = null;
+            try {
+                input = new FileInputStream(file);
+                input.read(data);
+                input.close();
+            }catch (IOException e) {
+                e.printStackTrace();
+            }
+
+            builder.addFormDataPart("image", file.getName(),
+                    RequestBody.create(MediaType.parse("image/jpeg"), data))
                     .addFormDataPart("imageName", file.getName());//传递特定用户专属文件;
 
-        }else {
-            url = url+"/no";
+        } else {
+            url = url + "/no";
         }
-        builder.addFormDataPart("username", custer.getUsername())//传递特定用户专属文件
-                .addFormDataPart("password", custer.getPassword())//传递特定用户专属文件
-                .addFormDataPart("nickname", custer.getVir_name())//传递特定用户专属文件
-                .addFormDataPart("phone", custer.getPhone());//传递特定用户专属文件
+
+        if (custer.getUsername() != null) {
+            builder.addFormDataPart("username", custer.getUsername());
+        }
+        if (custer.getName() != null) {
+            builder.addFormDataPart("name", custer.getName());
+        }
+        if (custer.getPassword() != null) {
+            builder.addFormDataPart("password", custer.getPassword());
+        }
+        if (custer.getVir_name() != null) {
+            builder.addFormDataPart("nickname", custer.getVir_name());
+        }
+        if (custer.getSex() != null) {
+            builder.addFormDataPart("sex", custer.getSex());
+        }
+        if (custer.getBirth() != null) {
+            builder.addFormDataPart("birth", custer.getBirth());
+        }
+        if (custer.getPhone() != null) {
+            builder.addFormDataPart("phone", custer.getPhone());
+        }
+
         requestBody = builder.build();
         Request request = new Request.Builder()
                 .url(url)
@@ -84,6 +145,7 @@ public class OkHttpUtil {
                 .build();
         client.newCall(request).enqueue(callback);
     }
+
 
     public static void getJson(String url, String json, Callback callback) {
         RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
@@ -137,63 +199,4 @@ public class OkHttpUtil {
         return loggingInterceptor;
     }
 
-
-    //        // 向服务器发送 HTTP 请求
-//        OkHttpClient client = new OkHttpClient();
-//        Request request = new Request.Builder()
-//                .url("http://example.com/api/update")  // 假设服务器 API 地址为 http://example.com/api/update
-//                .post(RequestBody.create(MediaType.parse("application/json; charset=utf-8"), mDataList.toString()))
-//                .build();
-//        try {
-//            Response response = client.newCall(request).execute();
-//            if (response.isSuccessful()) {
-//                // 更新成功
-//            } else {
-//                // 更新失败，处理异常
-//            }
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//        return true;
-
 }
-//    public static void postFormAddImage(String url,String file, Custer custer, Callback callback) {
-//        RequestBody requestBody = new MultipartBody.Builder()
-//                .setType(MultipartBody.FORM)
-//                .addFormDataPart("image",file,
-//                        RequestBody.create(MediaType.parse("multipart/form-data"),new File(file))
-//                )
-//                .addFormDataPart("custer", String.valueOf(custer))//传递特定用户专属文件
-//                .build();
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .post(requestBody)//一般填充请求体
-//                .build();
-//        client.newCall(request).enqueue(callback);
-//    }
-//
-//
-//    // 获取 OkHttpClient 实例
-//    OkHttpClient client = ((MyApplication) getApplication()).getClient();
-//    // 创建 JSON 对象
-//    JSONObject custerJson = new JSONObject();
-//custerJson.put("name", "张三");
-//        custerJson.put("age", 25);
-//// 创建 JSON 请求体
-//        RequestBody custerBody = RequestBody.create(MediaType.parse("application/json"), custerJson.toString());
-//// 创建文件请求体
-//        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
-//// 创建 MultipartBody.Part 对象
-//        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
-//// 创建 MultipartBody 对象
-//        MultipartBody requestBody = new MultipartBody.Builder()
-//        .setType(MultipartBody.FORM)
-//        .addPart(filePart)
-//        .addFormDataPart("custer", custerJson.toString())
-//        .build();
-//// 创建请求对象
-//        Request request = new Request.Builder()
-//        .url(url)
-//        .post(requestBody)
-//        .build();
-//// 发送请求

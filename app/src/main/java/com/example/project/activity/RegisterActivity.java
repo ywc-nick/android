@@ -1,6 +1,7 @@
 package com.example.project.activity;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -139,8 +140,7 @@ public class RegisterActivity extends AppCompatActivity {
                     register();
                     break;
                 case R.id.btn_login1:
-                    intent = new Intent(getApplicationContext(), LoginActivity.class);
-                    startActivity(intent);
+                    finish();
                     break;
                 case R.id.imageView:
                     imageUpload();
@@ -164,16 +164,16 @@ public class RegisterActivity extends AppCompatActivity {
                 switch (which) {
                     case 0:
                         // 启动相机拍照
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                         startActivityForResult(intent, 0);
                         break;
                     case 1:
                         // 从相册选择照片
                         builder.create().show();
-                        Intent intent2 = new Intent();
-                        intent2.setAction(Intent.ACTION_GET_CONTENT);
-                        intent2.setType("image/*");
-                        startActivityForResult(intent2, 1);
+                        intent = new Intent();
+                        intent.setAction(Intent.ACTION_GET_CONTENT);
+                        intent.setType("image/*");
+                        startActivityForResult(intent, 1);
                         break;
                 }
             }

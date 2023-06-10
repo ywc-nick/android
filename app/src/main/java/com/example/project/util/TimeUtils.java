@@ -20,6 +20,13 @@ public class TimeUtils {
         String formattedDate = dateFormat.format(date);
         return formattedDate.toString();
     }
+    public static String TimestampToDateString2(String stringTimestamp){
+        long timestamp = Long.parseLong(stringTimestamp); // 将字符串类型时间戳转换为长整型
+        Date date = new Date(timestamp);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        String formattedDate = dateFormat.format(date);
+        return formattedDate.toString();
+    }
 
     public static String timestampToString(long time){
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//定义格式，不显示毫秒

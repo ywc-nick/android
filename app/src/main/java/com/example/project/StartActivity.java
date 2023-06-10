@@ -59,7 +59,7 @@ public class StartActivity extends AppCompatActivity {
 
         @Override
         public void onTick(long millisUntilFinished) {
-            button.setText(millisUntilFinished/1000+"秒");
+            button.setText(millisUntilFinished/1000+"秒|跳过");
         }
 
         @Override
