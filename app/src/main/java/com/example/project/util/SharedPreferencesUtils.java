@@ -40,5 +40,20 @@ public class SharedPreferencesUtils {
 
     }
 
+    public static boolean isLogin(Context context){
+        sharedPreferences = context.getSharedPreferences(SHARE_NAEM, Context.MODE_PRIVATE);
+        Integer id = sharedPreferences.getInt(ID,0);
+        String use = sharedPreferences.getString(USERNAME,null);
+        String pass = sharedPreferences.getString(PASSWORD,null);
+        if (id==0||use==null||pass==null){
+            LoggerUtils.e("未登录");
+            return false;
+        }else {
+            return true;
+        }
+
+    }
+
+
 
 }

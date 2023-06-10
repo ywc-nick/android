@@ -11,6 +11,7 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.util.Base64;
 
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 /**
@@ -21,6 +22,11 @@ public class ImageUtils {
 
     public static final int bigimage = 20;
     public static final int smallimage = 10;
+
+    public static Bitmap getBitMap(String path) throws FileNotFoundException {
+        Bitmap bitmap = BitmapFactory.decodeFile(path);
+        return bitmap;
+    }
 
     public static Bitmap String2Bitmap(String bytes){
         byte[] imagebytes = Base64.decode(bytes,Base64.DEFAULT);

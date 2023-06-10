@@ -27,6 +27,17 @@ public class Custer implements Serializable {
     private String phone; //手机号
     private Long nums;//文章数
 
+    public Custer( String username, String password, String name, String vir_name, String face, String sex, String birth, String phone, Long nums) {
+        this.username = username;
+        this.password = password;
+        this.name = name;
+        this.vir_name = vir_name;
+        this.face = face;
+        this.sex = sex;
+        this.birth = birth;
+        this.phone = phone;
+        this.nums = nums;
+    }
 
     private String imagebytes;//头像bytes数据
 

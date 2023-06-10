@@ -11,6 +11,9 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.os.Parcelable;
 import android.util.Base64;
 import android.view.LayoutInflater;
@@ -19,14 +22,18 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.project.R;
 import com.example.project.activity.ArticleActivity;
+import com.example.project.activity.LoginActivity;
 import com.example.project.activity.MyTextActivity;
+import com.example.project.activity.RegisterActivity;
 import com.example.project.adapter.TextHistoryAdapter;
 import com.example.project.pojo.Collect;
 import com.example.project.pojo.Like;
@@ -54,22 +61,49 @@ import okhttp3.Callback;
 import okhttp3.Response;
 
 
-public class MyFragment extends Fragment implements TextHistoryAdapter.TextHistoryFresh{
+public class MyFragment extends Fragment implements TextHistoryAdapter.TextHistoryFresh {
 
 
     ImageView image;//头像
-    TextView nickname,likeView,collectView,textView;//昵称
+    TextView nickname, likeView, collectView, textView;//昵称
+    FrameLayout login;
 
     ListView listView;
-    ImageView allDelete;
+    ImageView allDelete, setting;
     List<TextHistoryBean> texts;
     TextHistoryAdapter textHistoryAdapter;
-
-    TextHistoryDao textHistoryDao ;
+    TextHistoryDao textHistoryDao;
 
     Gson gson = new Gson();
+    Custer custer;
+    Map maps;
 
     public static final String opt = "option";//Like2CollectActivity碎片指定
+
+    Handler mHandler = new Handler(Looper.getMainLooper()) {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            switch (msg.what) {
+                case 1:
+                    textView.setText(custer.getNums().toString());
+//                        image.setImageBitmap(ImageUtils.getCircularBitmap(bitmap));
+                    if (custer.getImagebytes()!=null){
+                        image.setImageBitmap(ImageUtils.getRoundedCornerBitmap(custer.getImagebytes(), ImageUtils.bigimage));
+                    }
+
+                    nickname.setText(custer.getVir_name());
+                    break;
+                case 2:
+                    List likesnum = (List) maps.get("likesnum");
+                    List collectsnum = (List) maps.get("collectsnum");
+                    collectView.setText(String.valueOf(Math.round((Double) collectsnum.get(0))));
+                    likeView.setText(String.valueOf(Math.round((Double) likesnum.get(0))));
+                default:
+                    break;
+            }
+        }
+    };
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -81,9 +115,58 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
         return view;
     }
 
+    public void init(View view) {
+        image = view.findViewById(R.id.fra_my_image);
+        nickname = view.findViewById(R.id.fra_my_nickname);
+        textView = view.findViewById(R.id.fra_my_text);
+        collectView = view.findViewById(R.id.fra_my_collect);
+        likeView = view.findViewById(R.id.fra_my_like);
+        login = view.findViewById(R.id.fra_my_login);
+        setting = view.findViewById(R.id.fra_my_setting);
+
+        setting.setOnClickListener(listener);
+        collectView.setOnClickListener(listener);
+        likeView.setOnClickListener(listener);
+        textView.setOnClickListener(listener);
+        login.setOnClickListener(listener);
+    }
+
+    View.OnClickListener listener = new View.OnClickListener() {
+        Intent intent;
+
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+
+                case R.id.fra_my_like:
+                    intent = new Intent(getActivity(), MyTextActivity.class);
+                    intent.putExtra(opt, 0);
+                    startActivity(intent);
+                    break;
+                case R.id.fra_my_text:
+                    intent = new Intent(getActivity(), MyTextActivity.class);
+                    intent.putExtra(opt, 1);
+                    startActivity(intent);
+                    break;
+                case R.id.fra_my_collect:
+                    intent = new Intent(getActivity(), MyTextActivity.class);
+                    intent.putExtra(opt, 2);
+                    startActivity(intent);
+                    break;
+                case R.id.fra_my_login:
+                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                    break;
+                case R.id.fra_my_setting:
+                    startActivity(new Intent(getActivity(), RegisterActivity.class));
+                    break;
+
+            }
+        }
+    };
+
     //数据库查询
-    public void query(){
-        textHistoryDao= new TextHistoryDao(getContext());
+    public void query() {
+        textHistoryDao = new TextHistoryDao(getContext());
         texts = textHistoryDao.queryAll();
         textHistoryAdapter.setTexts(texts);
         textHistoryAdapter.setTextFresh(this);
@@ -92,19 +175,19 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
 
     private void initHistory(View view) {
 
-        listView= view.findViewById(R.id.fra_my_list);
+        listView = view.findViewById(R.id.fra_my_list);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!texts.isEmpty()){
+                if (!texts.isEmpty()) {
                     Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                    intent.putExtra("tid",texts.get(position).getTid());
-                    LoggerUtils.i("MyFragment",position+"");
+                    intent.putExtra("tid", texts.get(position).getTid());
+                    LoggerUtils.i("MyFragment", position + "");
                     getActivity().startActivity(intent);
                 }
             }
         });
-        textHistoryAdapter = new TextHistoryAdapter(getContext(),texts,this);
+        textHistoryAdapter = new TextHistoryAdapter(getContext(), texts, this);
         query();
 
         allDelete = view.findViewById(R.id.fra_my_delete);
@@ -116,7 +199,7 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
                     public void onClick(DialogInterface dialog, int which) {
                         textHistoryDao.deleteAll();
                         texts.clear();
-                        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(),texts,MyFragment.this);
+                        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(), texts, MyFragment.this);
                         temp.setTextFresh(MyFragment.this);
                         listView.setAdapter(temp);
                         listView.deferNotifyDataSetChanged();//数据同步
@@ -132,140 +215,87 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
 
     }
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        //ToDo
-        textHistoryDao = new TextHistoryDao(getContext());
-        textHistoryDao.insert(new TextHistoryBean(1,"12fgddfg31",80));
-        textHistoryDao.insert(new TextHistoryBean(2,"1fadf1",100));
-        textHistoryDao.insert(new TextHistoryBean(3,"1fafffnndfdf1",0));
-        textHistoryDao.insert(new TextHistoryBean(5,"1ffggouaggdddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(4,"1ffggouoaggdddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(6,"1ffggauououggdddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(7,"1ffggaggdddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(8,"1fndneradddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(9,"1faderrqddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(10,"1fadddsdf1",0));
-        textHistoryDao.insert(new TextHistoryBean(11,"f",0));
-        textHistoryDao.insert(new TextHistoryBean(12,"fyury",0));
-        textHistoryDao.insert(new TextHistoryBean(13,"jjf",0));
-        textHistoryDao.insert(new TextHistoryBean(14,"1fadddf1",0));
-        textHistoryDao.insert(new TextHistoryBean(15,"1farerqvfbf1",100));
+//    @Override
+//    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+//        super.onViewCreated(view, savedInstanceState);
+//        //ToDo
+//        textHistoryDao = new TextHistoryDao(getContext());
+//        textHistoryDao.insert(new TextHistoryBean(1,"12fgddfg31",80));
+//        textHistoryDao.insert(new TextHistoryBean(2,"1fadf1",100));
+//        textHistoryDao.insert(new TextHistoryBean(3,"1fafffnndfdf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(5,"1ffggouaggdddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(4,"1ffggouoaggdddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(6,"1ffggauououggdddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(7,"1ffggaggdddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(8,"1fndneradddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(9,"1faderrqddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(10,"1fadddsdf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(11,"f",0));
+//        textHistoryDao.insert(new TextHistoryBean(12,"fyury",0));
+//        textHistoryDao.insert(new TextHistoryBean(13,"jjf",0));
+//        textHistoryDao.insert(new TextHistoryBean(14,"1fadddf1",0));
+//        textHistoryDao.insert(new TextHistoryBean(15,"1farerqvfbf1",100));
+//
+//    }
 
-    }
-
-    public void init( View view){
-        image = view.findViewById(R.id.fra_my_image);
-        nickname = view.findViewById(R.id.fra_my_nickname);
-        textView = view.findViewById(R.id.fra_my_text);
-        collectView = view.findViewById(R.id.fra_my_collect);
-        likeView = view.findViewById(R.id.fra_my_like);
-
-        collectView.setOnClickListener(listener);
-        likeView.setOnClickListener(listener);
-        textView.setOnClickListener(listener);
-    }
-
-    View.OnClickListener listener = new View.OnClickListener() {
-        Intent intent;
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()){
-
-                case R.id.fra_my_like:
-                    intent = new Intent(getActivity(), MyTextActivity.class);
-                    intent.putExtra(opt,0);
-                    startActivity(intent);
-                    break;
-                case R.id.fra_my_text:
-                    intent = new Intent(getActivity(), MyTextActivity.class);
-                    intent.putExtra(opt,1);
-                    startActivity(intent);
-                    break;
-                case R.id.fra_my_collect:
-                    intent = new Intent(getActivity(), MyTextActivity.class);
-                    intent.putExtra(opt,2);
-                    startActivity(intent);
-                    break;
-
-
-            }
-        }
-    };
 
     /**
      * 填充数据
      */
-    public void dataFill(){
+    public void dataFill() {
 
 
         Map map = SharedPreferencesUtils.getSharePreferences(getContext());
         Integer id = (Integer) map.get(SharedPreferencesUtils.ID);
 
-        if (id == 0){
+        if (id == 0) {
             return;
         }
 
-        String url =OkHttpUtil.baseUrl+"/custer/" + id;
-        OkHttpUtil.get(url, new Callback(){
+        String url = OkHttpUtil.baseUrl + "/custer/" + id;
+        OkHttpUtil.get(url, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String info = response.body().string().toString();
 //                LoggerUtils.i("get data success",info);
-                getActivity().runOnUiThread(new Runnable() {
-
-                    @Override
-                    public void run() {
-                        try {
-                            Custer custer = gson.fromJson(info,Custer.class);
+                try {
+                    custer = gson.fromJson(info, Custer.class);
+                    Message message = mHandler.obtainMessage(1);
+                    mHandler.sendMessage(message);
 //                            byte[] imagebytes = Base64.decode(custer.getImagebytes(),Base64.DEFAULT);
 //                            Bitmap bitmap = BitmapFactory.decodeByteArray(imagebytes,0,imagebytes.length);
-                            textView.setText(custer.getNums().toString());
-//                        image.setImageBitmap(ImageUtils.getCircularBitmap(bitmap));
-                            image.setImageBitmap(ImageUtils.getRoundedCornerBitmap(custer.getImagebytes(),ImageUtils.bigimage));
-                            nickname.setText(custer.getVir_name());
-                        } catch (Exception e){
-                            LoggerUtils.e("MyFragment数据为空",e.getMessage());
-                        }
-
-                    }
-                });
+                } catch (Exception e) {
+                    LoggerUtils.e("MyFragment数据为空", e.getMessage());
+                }
             }
+
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LoggerUtils.i("数据获取失败！");
             }
         });
 
-        url =OkHttpUtil.baseUrl+ "/other/" + id;
+        url = OkHttpUtil.baseUrl + "/other/" + id;
         OkHttpUtil.get(url, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 LoggerUtils.i("数据获取失败！");
             }
+
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 String info = response.body().string();
-
-              getActivity().runOnUiThread(new Runnable() {
-                  @Override
-                  public void run() {
-                      Type type = new TypeToken<Map<String, List>>(){}.getType();//指定合适的 Type 类型
-                      try {
-                          Map map = gson.fromJson(info, type);
+                Type type = new TypeToken<Map<String, List>>() {
+                }.getType();//指定合适的 Type 类型
+                try {
+                    maps = gson.fromJson(info, type);
+                    Message message = mHandler.obtainMessage(2);
+                    mHandler.sendMessage(message);
 //                      LoggerUtils.i(map.toString());
-                          List likesnum = (List) map.get("likesnum");
-                          List collectsnum = (List) map.get("collectsnum");
-                          collectView.setText(String.valueOf(Math.round((Double) collectsnum.get(0))));
-                          likeView.setText(String.valueOf(Math.round((Double) likesnum.get(0))));
-                      }catch (Exception e){
-                          LoggerUtils.e("MyFragment数据为空",e.getMessage());
+                } catch (Exception e) {
+                    LoggerUtils.e("MyFragment数据为空", e.getMessage());
 
-                      }
-
-                  }
-              });
+                }
             }
         });
 
@@ -279,17 +309,17 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
     }
 
 
-public void delete(Integer position){
-    Integer tid = texts.get(position).getTid();
-    textHistoryDao.delete(tid);
-    LoggerUtils.i("MyFragment",texts.get(position).toString()+"删除成功");
-    texts= textHistoryDao.queryAll();
-    TextHistoryAdapter temp = new TextHistoryAdapter(getContext(),texts,this);
-    textHistoryAdapter.setTextFresh(this);
-    temp.notifyDataSetChanged();
-    listView.setAdapter(temp);
-    listView.deferNotifyDataSetChanged();//数据同步
-}
+    public void delete(Integer position) {
+        Integer tid = texts.get(position).getTid();
+        textHistoryDao.delete(tid);
+        LoggerUtils.i("MyFragment", texts.get(position).toString() + "删除成功");
+        texts = textHistoryDao.queryAll();
+        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(), texts, this);
+        textHistoryAdapter.setTextFresh(this);
+        temp.notifyDataSetChanged();
+        listView.setAdapter(temp);
+        listView.deferNotifyDataSetChanged();//数据同步
+    }
 //    iAdapter = new ItemAdapter(MainActivity.this, data);
 //        iAdapter.setRefreshPriceInterface(this);
 //    // 将适配器装入ListView对象
@@ -298,6 +328,6 @@ public void delete(Integer position){
 
     @Override
     public void sendDeletePosition(Integer position) {
-       delete(position);
+        delete(position);
     }
 }

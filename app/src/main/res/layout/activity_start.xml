@@ -8,7 +8,8 @@
     tools:context=".StartActivity">
 
     <Button
-        android:background="@drawable/button"
+        android:background="@drawable/startbuttonradius"
+        android:elevation="20dp"
         android:id="@+id/act_start_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -20,10 +21,10 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:gravity="center"
+        android:paddingBottom="500dp"
         android:text="my app"
         android:textColor="@color/white"
-        android:textSize="60sp"
-        android:gravity="center"
-        />
+        android:textSize="60sp" />
 
 </FrameLayout>

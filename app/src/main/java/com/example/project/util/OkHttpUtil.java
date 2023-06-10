@@ -1,10 +1,14 @@
 package com.example.project.util;
 
+import com.example.project.pojo.Custer;
+
+import java.io.File;
 import java.io.IOException;
 
 import okhttp3.Callback;
 import okhttp3.FormBody;
 import okhttp3.MediaType;
+import okhttp3.MultipartBody;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
@@ -44,10 +48,39 @@ public class OkHttpUtil {
     }
 
 
-    public static void postForm(String url, FormBody formBody, Callback callback) {
+    public static void postForm(String url, FormBody.Builder formBody, Callback callback) {
         Request request = new Request.Builder()
                 .url(url)
-                .post(formBody)
+                .post(formBody.build())
+                .build();
+        client.newCall(request).enqueue(callback);
+    }
+
+    public static void postFormAddImage(String url, String filename, Custer custer, Callback callback) {
+
+//        @RequestParam("username") String username,
+//        @RequestParam("password") String password, @RequestParam("nickname") String nickname,
+//        @RequestParam("imagePath") String imagePath,@RequestParam("phone") String phone)
+        RequestBody requestBody;
+        MultipartBody.Builder builder = new MultipartBody.Builder()
+                .setType(MultipartBody.FORM);
+        if (filename!=null) {
+            File file = new File(filename);
+            builder.addFormDataPart("image", filename,
+                    RequestBody.create(MediaType.parse("multipart/form-data"), file.getName()))
+                    .addFormDataPart("imageName", file.getName());//传递特定用户专属文件;
+
+        }else {
+            url = url+"/no";
+        }
+        builder.addFormDataPart("username", custer.getUsername())//传递特定用户专属文件
+                .addFormDataPart("password", custer.getPassword())//传递特定用户专属文件
+                .addFormDataPart("nickname", custer.getVir_name())//传递特定用户专属文件
+                .addFormDataPart("phone", custer.getPhone());//传递特定用户专属文件
+        requestBody = builder.build();
+        Request request = new Request.Builder()
+                .url(url)
+                .post(requestBody)//一般填充请求体
                 .build();
         client.newCall(request).enqueue(callback);
     }
@@ -79,14 +112,6 @@ public class OkHttpUtil {
         client.newCall(request).enqueue(callback);
     }
 
-    public static void deleteJson(String url, String json, Callback callback) {
-        RequestBody requestBody = RequestBody.create(json, MediaType.parse("application/json;charset=utf-8"));
-        Request request = new Request.Builder()
-                .url(url)
-                .delete(requestBody)
-                .build();
-        client.newCall(request).enqueue(callback);
-    }
 
     /**
      * 同步
@@ -113,7 +138,6 @@ public class OkHttpUtil {
     }
 
 
-
     //        // 向服务器发送 HTTP 请求
 //        OkHttpClient client = new OkHttpClient();
 //        Request request = new Request.Builder()
@@ -133,3 +157,43 @@ public class OkHttpUtil {
 //        return true;
 
 }
+//    public static void postFormAddImage(String url,String file, Custer custer, Callback callback) {
+//        RequestBody requestBody = new MultipartBody.Builder()
+//                .setType(MultipartBody.FORM)
+//                .addFormDataPart("image",file,
+//                        RequestBody.create(MediaType.parse("multipart/form-data"),new File(file))
+//                )
+//                .addFormDataPart("custer", String.valueOf(custer))//传递特定用户专属文件
+//                .build();
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(requestBody)//一般填充请求体
+//                .build();
+//        client.newCall(request).enqueue(callback);
+//    }
+//
+//
+//    // 获取 OkHttpClient 实例
+//    OkHttpClient client = ((MyApplication) getApplication()).getClient();
+//    // 创建 JSON 对象
+//    JSONObject custerJson = new JSONObject();
+//custerJson.put("name", "张三");
+//        custerJson.put("age", 25);
+//// 创建 JSON 请求体
+//        RequestBody custerBody = RequestBody.create(MediaType.parse("application/json"), custerJson.toString());
+//// 创建文件请求体
+//        RequestBody fileBody = RequestBody.create(MediaType.parse("image/*"), file);
+//// 创建 MultipartBody.Part 对象
+//        MultipartBody.Part filePart = MultipartBody.Part.createFormData("image", file.getName(), fileBody);
+//// 创建 MultipartBody 对象
+//        MultipartBody requestBody = new MultipartBody.Builder()
+//        .setType(MultipartBody.FORM)
+//        .addPart(filePart)
+//        .addFormDataPart("custer", custerJson.toString())
+//        .build();
+//// 创建请求对象
+//        Request request = new Request.Builder()
+//        .url(url)
+//        .post(requestBody)
+//        .build();
+//// 发送请求
