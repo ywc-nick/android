@@ -17,6 +17,9 @@
         android:theme="@style/MyTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.SettingActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.InfoActivity"
             android:exported="false" />
         <activity

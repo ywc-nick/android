@@ -34,6 +34,9 @@ public class ImageUtils {
     }
 
     public static Bitmap getRoundedCornerBitmap(String image, int pixels) {
+        if(image==null){
+            return null;
+        }
         byte[] imagebytes = Base64.decode(image,Base64.DEFAULT);
         Bitmap bitmap = BitmapFactory.decodeByteArray(imagebytes,0,imagebytes.length);
         // 创建一个ARGB_8888格式的Bitmap对象，大小等于传入的位图对象

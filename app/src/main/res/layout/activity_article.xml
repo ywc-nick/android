@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
@@ -75,7 +75,7 @@
 
         </LinearLayout>
 
-        <EditText
+        <TextView
 
             android:id="@+id/et_title"
 
@@ -92,13 +92,13 @@
             android:layout_centerHorizontal="true"
             />
 
-        <EditText
+        <TextView
 
             android:id="@+id/et_content"
 
             android:layout_width="match_parent"
 
-            android:layout_height="300dp"
+            android:layout_height="400dp"
 
             android:layout_marginTop="20dp"
 
@@ -115,14 +115,15 @@
             android:layout_height="60dp"
             android:textColor="@android:color/black"
             android:layout_marginLeft="300dp"
+            android:layout_marginTop="20dp"
             android:text="发布时间："/>
 
 
         <LinearLayout
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="190dp"
+            android:layout_marginLeft="200dp"
             android:orientation="horizontal">
 
 
@@ -183,4 +184,4 @@
 
     </LinearLayout>
 
-</RelativeLayout>
+</ScrollView>

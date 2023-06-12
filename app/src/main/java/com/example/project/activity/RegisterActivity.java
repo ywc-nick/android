@@ -15,7 +15,9 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.provider.Settings;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
 import android.view.View;
@@ -56,6 +58,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -73,12 +76,9 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText et_nicke;
     private EditText et_phone;
     private EditText et_password, birth;
-    //    RadioGroup sex;
-//    private RadioButton boy,girl;
     private Button login1;
     private Button register1;
     ImageView imageView;
-//    LinearLayout image;
 
 
     Gson gson = new Gson();
@@ -100,35 +100,77 @@ public class RegisterActivity extends AppCompatActivity {
         et_nicke = findViewById(R.id.et_nicke);
         et_password = findViewById(R.id.et_password);
         et_phone = findViewById(R.id.et_phone);
-//        sex = findViewById(R.id.rg_sex);
-//        boy = findViewById(R.id.rb_man);
-//        girl = findViewById(R.id.rb_woman);
-//
-//        sex.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(RadioGroup group, int checkedId) {
-//                switch (checkedId){
-//                    case R.id.rb_man:
-//                        sexVal = "1";
-//                        break;
-//                    case R.id.rb_woman:
-//                        sexVal = "2";
-//                        break;
-//                }
-//            }
-//        });
 
         login1 = findViewById(R.id.btn_login1);
         register1 = findViewById(R.id.btn_register1);
-//        image = findViewById(R.id.act_register_image);
         imageView = findViewById(R.id.imageView);
-//        birth = findViewById(R.id.et_birth);
-
         //点击按钮返回到登录界面
         login1.setOnClickListener(listener);
         //点击注册按钮跳转到登录界面
         register1.setOnClickListener(listener);
         imageView.setOnClickListener(listener);
+
+        et_name.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String input = s.toString().trim();
+                if (!isPasswordValid(input)) {
+                    et_name.setError("账号只能包含字母或数字,6-8之间！");
+                    register1.setEnabled(false);
+                } else {
+                    et_name.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+        et_password.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // do nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                String input = s.toString().trim();
+                if (!isPasswordValid(input)) {
+                    et_password.setError("密码只能包含字母或数字,6-8之间！");
+                    register1.setEnabled(false);
+                } else {
+                    register1.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // do nothing
+            }
+        });
+
+    }
+
+    public boolean isPasswordValid(String password) {
+        // 检查字符串是否为空
+        if (password == null) {
+            return false;
+        }
+        // 检查字符串长度是否在6到10之间
+        if (password.length() < 6 || password.length() > 10) {
+            return false;
+        }
+        // 检查字符串是否只包含字母和数字
+        if (!password.matches("^[a-zA-Z0-9]*$")) {
+            return false;
+        }
+        return true;
     }
 
 
@@ -169,7 +211,6 @@ public class RegisterActivity extends AppCompatActivity {
                         break;
                     case 1:
                         // 从相册选择照片
-                        builder.create().show();
                         intent = new Intent();
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         intent.setType("image/*");
@@ -179,7 +220,6 @@ public class RegisterActivity extends AppCompatActivity {
             }
         });
         builder.create().show();
-
     }
 
     /**
@@ -240,11 +280,9 @@ public class RegisterActivity extends AppCompatActivity {
                     try {
                         bitMap = ImageUtils.getBitMap(imagePath);
                         imageView.setImageBitmap(bitMap);
-//            imageByte = bitMap;
                     } catch (FileNotFoundException e) {
                         e.printStackTrace();
                     }
-//                    pictureCropping(uri);
                     break;
 
 

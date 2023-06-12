@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -34,8 +37,8 @@ public class PublishActivity extends AppCompatActivity {
     private EditText et_topic;
     private EditText et_content;
     private Button btnPublish;
+    private Spinner spinner;
 
-    OkHttpUtil okHttpUtil = new OkHttpUtil();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,12 +48,32 @@ public class PublishActivity extends AppCompatActivity {
         et_topic = findViewById(R.id.et_topic);
         et_content = findViewById(R.id.et_content);
         btnPublish = findViewById(R.id.btn_publish);
+        spinner = findViewById(R.id.spinner);
 
-        //TODO 从共享首选项中拿取id
-        //SharedPreferencesUtils sharedPreferencesUtils = new SharedPreferencesUtils();
+        // 从共享首选项中拿取id
         Map map = SharedPreferencesUtils.getSharePreferences(getApplicationContext());
         Integer id = (Integer) map.get(SharedPreferencesUtils.ID);
 
+
+//        ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(this, R.array.languages_array, android.R.layout.simple_spinner_item);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//        spinner.setAdapter(adapter);
+//        //spinner.setOnItemSelectedListener(this);
+//
+//        spinner.setAdapter(adapter);
+//        spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+//                String item = parent.getItemAtPosition(position).toString();
+//                Toast.makeText(parent.getContext(), "Selected: " + item, Toast.LENGTH_SHORT).show();
+//            }
+//
+//            //只有当patent中的资源没有时，调用此方法
+//            @Override
+//            public void onNothingSelected(AdapterView<?> parent) {
+//
+//            }
+//        });
 
         btnPublish.setOnClickListener(new View.OnClickListener() {
             @Override

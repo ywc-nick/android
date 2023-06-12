@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
     tools:context=".activity.PublishActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -28,7 +33,7 @@
 
         android:text="创作"
 
-        android:background="#abb41e8c"
+        android:background="#AB226AD6"
 
         android:textSize="20dp"
 
@@ -43,6 +48,20 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入文章主题" />
+
+    <TextView
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="请选择你的文章类型"
+        android:layout_gravity="center"/>
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:backgroundTint="@color/black"
+        android:spinnerMode="dialog"
+        android:layout_gravity="center"/>
 
     <EditText
         android:id="@+id/et_content"
@@ -72,5 +91,5 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="发布" />
-
 </LinearLayout>
+</ScrollView>

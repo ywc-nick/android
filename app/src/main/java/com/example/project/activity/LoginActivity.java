@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -21,6 +23,7 @@ import com.example.project.util.SharedPreferencesUtils;
 import com.google.gson.Gson;
 
 import java.io.IOException;
+import java.util.regex.Pattern;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -55,6 +58,7 @@ public class LoginActivity extends AppCompatActivity {
         register.setOnClickListener(listener);
         //注册跳转
         name.setText(getIntent().getStringExtra("username"));
+
     }
 
     View.OnClickListener listener = new View.OnClickListener() {
@@ -63,6 +67,7 @@ public class LoginActivity extends AppCompatActivity {
             Intent intent;
             switch (v.getId()) {
                 case R.id.btn_login:
+
                     Custer custer = login();
                     if (custer != null) {
                         SharedPreferencesUtils.setSharePreferences(getBaseContext(), custer.getId(), custer.getUsername(), custer.getPassword());
@@ -81,12 +86,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     };
 
+
+
     private Custer login() {
         //获取EditText数据
         String username = name.getText().toString();
         String pass = password.getText().toString();
 
-        url = OkHttpUtil.baseUrl + "/custer/login/" + username + "/" + pass;
+
+
+
+            url = OkHttpUtil.baseUrl + "/custer/login/" + username + "/" + pass;
         //2.配置request:添加数据+请求方法+url
         OkHttpUtil.get(url, new Callback() {
             @Override
