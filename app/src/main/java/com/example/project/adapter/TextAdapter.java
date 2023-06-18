@@ -1,5 +1,6 @@
 package com.example.project.adapter;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -9,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -21,13 +23,12 @@ import com.example.project.util.TimeUtils;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> implements View.OnClickListener{
+public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder> {
 
     Context context;
     List<Text> texts = new ArrayList<>();
     ItemClickInterface itemClickInterface;
-    Text text = new Text();//传递的数据
-    int post;//当前数据位置
+
 
     public void setTexts(List<Text> texts) {
         this.texts = texts;
@@ -45,31 +46,39 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
     //获取视图
     @Override
     public int getItemViewType(int position) {
-        if (!texts.isEmpty()&&texts!=null){
-            text = texts.get(position);//赋值
-            post = position;
-        }
+
         return super.getItemViewType(position);
     }
 
-
+    @Override
+    public long getItemId(int position) {
+        return super.getItemId(position);
+    }
 
     @NonNull
     @Override
     public TextViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.text_item, parent, false);
-        itemView.setOnClickListener(this);
+
         return new TextViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TextViewHolder holder, int position) {
-        if (!texts.isEmpty() && texts != null) {
+    public void onBindViewHolder(@NonNull TextViewHolder holder, @SuppressLint("RecyclerView") int position) {
+        if (!texts.isEmpty()) {
             Text text = texts.get(position);
             holder.setData(text);
         }
-
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!texts.isEmpty() && itemClickInterface != null) {
+                    itemClickInterface.onItemClick(position, texts.get(position));
+                }
+            }
+        });
+//        Toast.makeText(context.getApplicationContext(), text.getTheme() + " | " + position, Toast.LENGTH_SHORT).show();
     }
 
 
@@ -82,23 +91,14 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
 
     }
 
+
     public void updateData(List<Text> newTexts) {
 
         int oldDataSize = getItemCount();
         int newDataSize = newTexts.size();
-
         texts.addAll(newTexts);
-        notifyItemRangeInserted(oldDataSize, newDataSize);//Todo
+        notifyItemRangeInserted(oldDataSize, newDataSize);
     }
-
-    @Override
-    public void onClick(View v) {
-        if (!texts.isEmpty()&&texts!=null&&itemClickInterface!=null){
-            itemClickInterface.onItemClick(post,text);
-        }
-    }
-
-
 
 
     public class TextViewHolder extends RecyclerView.ViewHolder {
@@ -116,6 +116,7 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
             like = itemView.findViewById(R.id.text_item_like);
             collect = itemView.findViewById(R.id.text_item_collect);
             date = itemView.findViewById(R.id.text_item_date);
+
         }
 
         public void setData(Text text) {
@@ -131,9 +132,8 @@ public class TextAdapter extends RecyclerView.Adapter<TextAdapter.TextViewHolder
     }
 
 
-
     //传送数据
     public interface ItemClickInterface {
-        void onItemClick(int position,Text text);
+        void onItemClick(int position, Text text);
     }
 }

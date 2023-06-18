@@ -128,6 +128,12 @@ public class HotFragment extends Fragment implements TextAdapter.ItemClickInterf
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestData();
+    }
+
     public void requestData() {
         Gson gson = new Gson();
         String url = OkHttpUtil.baseUrl+"/text/like/" + currentPage;

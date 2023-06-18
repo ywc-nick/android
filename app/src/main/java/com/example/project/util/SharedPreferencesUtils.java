@@ -54,6 +54,15 @@ public class SharedPreferencesUtils {
 
     }
 
+    public static void updatePass(Context context, String password){
+
+        sharedPreferences = context.getSharedPreferences(SHARE_NAEM, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString(PASSWORD,password);
+        editor.commit();
+
+    }
+
 
 
 }

@@ -15,6 +15,7 @@ import android.widget.Toast;
 import com.example.project.R;
 import com.example.project.sqlite.TextHistoryDao;
 import com.example.project.sqlite.pojo.TextHistoryBean;
+import com.example.project.util.TimeUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +23,9 @@ import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 
+/**
+ * @aurth ywc
+ */
 public class TextHistoryAdapter extends BaseAdapter {
 
 

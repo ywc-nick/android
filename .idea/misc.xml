@@ -36,7 +36,7 @@
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/drawable/shape_life_search.xml" value="0.303" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/drawable/startbuttonradius.xml" value="0.3245" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/drawable/textstyle.xml" value="0.3115" />
-        <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_article.xml" value="0.3619791666666667" />
+        <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_article.xml" value="0.2912621359223301" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_info.xml" value="0.29347826086956524" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_like2_collect.xml" value="0.1875" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_login.xml" value="0.3619791666666667" />
@@ -49,6 +49,7 @@
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_setting.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_start.xml" value="0.34692028985507245" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/activity_test.xml" value="0.38645833333333335" />
+        <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/change.xml" value="0.26614583333333336" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/empty_view.xml" value="0.2617753623188406" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/fragment_collect.xml" value="0.3619791666666667" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/layout/fragment_first.xml" value="0.38645833333333335" />
@@ -69,6 +70,7 @@
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/menu/bottom_nav_menu.xml" value="0.3567708333333333" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.17" />
         <entry key="..\:/AndroidWorkspace/project/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.17" />
+        <entry key="..\:/Java-tools/SDK/platforms/android-32/data/res/layout/simple_spinner_dropdown_item.xml" value="0.1" />
         <entry key="..\:/Java-tools/SDK/platforms/android-32/data/res/layout/simple_spinner_item.xml" value="0.3619791666666667" />
       </map>
     </option>

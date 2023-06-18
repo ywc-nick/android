@@ -1,5 +1,7 @@
 package com.example.project.sqlite.pojo;
 
+import com.example.project.util.TimeUtils;
+
 import java.io.Serializable;
 
 public class TextHistoryBean implements Serializable {

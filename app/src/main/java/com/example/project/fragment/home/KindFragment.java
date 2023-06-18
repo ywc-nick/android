@@ -105,6 +105,12 @@ public class KindFragment extends Fragment implements TextAdapter.ItemClickInter
         });
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        requestData();
+    }
+
     private void requestData() {
 //        kindInterface.sendToParent(kid,texts);
         Gson gson = new Gson();
