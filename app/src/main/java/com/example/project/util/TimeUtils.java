@@ -6,6 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.TimeZone;
 
 public class TimeUtils {
 
@@ -28,73 +29,33 @@ public class TimeUtils {
         return formattedDate.toString();
     }
 
-    public static String timestampToString(long time){
-        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");//定义格式，不显示毫秒
 
-        Timestamp now= new Timestamp(time);//获取系统当前时间
-
-        return df.format(now);
-    }
-    /**
-     * 将时间戳转换为字符串
-     *
-     * @param timestamp 时间戳（单位为毫秒）
-     * @param pattern   日期格式
-     * @return 日期字符串
-     */
-    public static String format(long timestamp, String pattern) {
-        DateFormat format = new SimpleDateFormat(pattern);
-        return format.format(new Date(timestamp));
-    }
-
-    /**
-     * 将日期对象转换为字符串
-     *
-     * @param date    日期对象
-     * @param pattern 日期格式
-     * @return 日期字符串
-     */
-    public static String format(Date date, String pattern) {
-        DateFormat format = new SimpleDateFormat(pattern);
-        return format.format(date);
-    }
-
-    /**
-     * 将日期字符串转换为日期对象
-     *
-     * @param dateString 日期字符串
-     * @param pattern    日期格式
-     * @return 日期对象
-     */
-    public static Date parse(String dateString, String pattern) {
-        DateFormat format = new SimpleDateFormat(pattern);
+    public static String timestampToString2(String time) {
+        SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date date = null;
         try {
-            return format.parse(dateString);
+            date = sf.parse(time);
         } catch (ParseException e) {
-            LoggerUtils.e("Error parsing date string: " + dateString, e.toString());
-            return null;
+            e.printStackTrace();
         }
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+        String format = df.format(date);
+        return format;
     }
 
-    /**
-     * 将时间戳转换为日期对象
-     *
-     * @param timestamp 时间戳（单位为毫秒）
-     * @return 日期对象
-     */
-    public static Date toDate(long timestamp) {
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(timestamp);
-        return calendar.getTime();
+
+
+    public static String timestampToString(String time){
+        // 创建 SimpleDateFormat 对象，指定日期格式
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        // 设置时区为东八区
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+        // 将时间戳转换为 Date 类型
+        Date date = new Date(time);
+        // 将 Date 类型转换为指定格式的日期字符串
+        String dateStr = sdf.format(date);
+        System.out.println(dateStr);
+        return dateStr;
     }
 
-    /**
-     * 将日期对象转换为时间戳
-     *
-     * @param date 日期对象
-     * @return 时间戳（单位为毫秒）
-     */
-    public static long toTimestamp(Date date) {
-        return date.getTime();
-    }
 }

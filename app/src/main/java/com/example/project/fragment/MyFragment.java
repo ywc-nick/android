@@ -35,6 +35,7 @@ import com.example.project.activity.InfoActivity;
 import com.example.project.activity.LoginActivity;
 import com.example.project.activity.MyTextActivity;
 import com.example.project.activity.RegisterActivity;
+import com.example.project.activity.SettingActivity;
 import com.example.project.adapter.TextHistoryAdapter;
 import com.example.project.pojo.Collect;
 import com.example.project.pojo.Like;
@@ -71,13 +72,14 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
 
     ListView listView;
     ImageView allDelete, setting;
-    List<TextHistoryBean> texts;
+    List<TextHistoryBean> textHistorys;
     TextHistoryAdapter textHistoryAdapter;
     TextHistoryDao textHistoryDao;
 
     Gson gson = new Gson();
     Custer custer;
     Map maps;
+    Text text;
 
     public static final String opt = "option";//Like2CollectActivity碎片指定
 
@@ -100,6 +102,12 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
                     List collectsnum = (List) maps.get("collectsnum");
                     collectView.setText(String.valueOf(Math.round((Double) collectsnum.get(0))));
                     likeView.setText(String.valueOf(Math.round((Double) likesnum.get(0))));
+                    break;
+                case 3:
+                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
+                    intent.putExtra("text",text);
+                    getActivity().startActivity(intent);
+                    break;
                 default:
                     break;
             }
@@ -158,7 +166,7 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
                     startActivity(new Intent(getActivity(), InfoActivity.class));
                     break;
                 case R.id.fra_my_setting:
-                    startActivity(new Intent(getActivity(), RegisterActivity.class));
+                    startActivity(new Intent(getActivity(), SettingActivity.class));
                     break;
 
             }
@@ -168,29 +176,27 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
     //数据库查询
     public void query() {
         textHistoryDao = new TextHistoryDao(getContext());
-        texts = textHistoryDao.queryAll();
-        textHistoryAdapter.setTexts(texts);
+        textHistorys = textHistoryDao.queryAll();
+        textHistoryAdapter.setTexts(textHistorys);
         textHistoryAdapter.setTextFresh(this);
 
     }
 
+
     private void initHistory(View view) {
 
         listView = view.findViewById(R.id.fra_my_list);
+
+        textHistoryAdapter = new TextHistoryAdapter(getContext(), textHistorys, this);
+        query();
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!texts.isEmpty()) {
-                    Intent intent = new Intent(getActivity(), ArticleActivity.class);
-                    intent.putExtra("tid", texts.get(position).getTid());
-                    LoggerUtils.i("MyFragment", position + "");
-                    getActivity().startActivity(intent);
+                if (!textHistorys.isEmpty()) {
+                    getInformation( textHistorys.get(position).getTid());
                 }
             }
         });
-        textHistoryAdapter = new TextHistoryAdapter(getContext(), texts, this);
-        query();
-
         allDelete = view.findViewById(R.id.fra_my_delete);
         allDelete.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,8 +205,8 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         textHistoryDao.deleteAll();
-                        texts.clear();
-                        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(), texts, MyFragment.this);
+                        textHistorys.clear();
+                        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(), textHistorys, MyFragment.this);
                         temp.setTextFresh(MyFragment.this);
                         listView.setAdapter(temp);
                         listView.deferNotifyDataSetChanged();//数据同步
@@ -306,15 +312,16 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
     public void onResume() {
         super.onResume();
         dataFill();
+        query();
     }
 
 
     public void delete(Integer position) {
-        Integer tid = texts.get(position).getTid();
-        textHistoryDao.delete(tid);
-        LoggerUtils.i("MyFragment", texts.get(position).toString() + "删除成功");
-        texts = textHistoryDao.queryAll();
-        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(), texts, this);
+        Integer id = textHistorys.get(position).getId();
+        textHistoryDao.delete(id);
+        LoggerUtils.i("MyFragment", textHistorys.get(position).toString() + "删除成功");
+        textHistorys = textHistoryDao.queryAll();
+        TextHistoryAdapter temp = new TextHistoryAdapter(getContext(), textHistorys, this);
         textHistoryAdapter.setTextFresh(this);
         temp.notifyDataSetChanged();
         listView.setAdapter(temp);
@@ -329,5 +336,34 @@ public class MyFragment extends Fragment implements TextHistoryAdapter.TextHisto
     @Override
     public void sendDeletePosition(Integer position) {
         delete(position);
+    }
+
+    //显示查看文章的内容的方法
+    private void getInformation(Integer tid) {
+
+        if (tid == 0) {
+            return;
+        }
+        String url = OkHttpUtil.baseUrl + "/text/" + tid;
+        OkHttpUtil.get(url, new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                String info = response.body().string().toString();
+//                LoggerUtils.i("get data success",info);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        text = gson.fromJson(info, Text.class);
+                        Message message = mHandler.obtainMessage(3);
+                        mHandler.sendMessage(message);
+                    }
+                });
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                LoggerUtils.i("数据获取失败！");
+            }
+        });
     }
 }
