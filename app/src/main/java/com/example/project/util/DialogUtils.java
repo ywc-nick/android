@@ -13,19 +13,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 public class DialogUtils {
 
-    /**
-     * 创建一个 Toast 提示
-     *
-     * @param context  上下文对象
-     * @param message  提示消息
-     * @param duration 提示持续时间（例如 Toast.LENGTH_SHORT）
-     */
-    public static void showShortToast(Context context, String message, int duration) {
-        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-    }
-    public static void showLongToast(Context context, String message, int duration) {
-        Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-    }
+
 
     /**
      * 创建一个 Snackbar 提示

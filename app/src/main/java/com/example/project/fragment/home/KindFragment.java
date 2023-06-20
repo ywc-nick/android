@@ -35,7 +35,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-
+/**
+ * @Author zhangxiaolong
+ */
 public class KindFragment extends Fragment implements TextAdapter.ItemClickInterface{
 
     RecyclerView recyclerView;

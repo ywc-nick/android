@@ -47,7 +47,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
-
+/**
+ * @Author zhouya
+ */
 public class PublishActivity extends AppCompatActivity {
 
     private EditText et_topic;
@@ -82,9 +84,7 @@ public class PublishActivity extends AppCompatActivity {
                         //处理数据为null的情况
                         Toast.makeText(getApplicationContext(), "无法选择文章类型", Toast.LENGTH_SHORT).show();
                     }
-
                     break;
-
                 default:
                     break;
             }

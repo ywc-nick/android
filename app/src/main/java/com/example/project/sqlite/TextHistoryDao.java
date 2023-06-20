@@ -66,7 +66,8 @@ public class TextHistoryDao {
         String[] columns = new String[]{
                 ID, TEXT_ID, TITLE, TIME, RATE
         };
-        Cursor query = db.query(false, TABLE_NAME, columns, null, null, null, null, null, null);
+        String orderBy = TIME+" DESC";
+        Cursor query = db.query(false, TABLE_NAME, columns, null, null, null, null, orderBy, null);
         List<TextHistoryBean> list = new ArrayList<>();
         while (query.moveToNext()) {
             int id = query.getInt(query.getColumnIndexOrThrow(ID));

@@ -43,7 +43,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-
+/**
+ * @Author zhangxiaolong
+ */
 public class SearchActivity extends AppCompatActivity {
 
     private EditText mSearchBox;

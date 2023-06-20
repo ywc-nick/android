@@ -28,7 +28,9 @@ import java.util.Map;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
-
+/**
+ * @Author xuexiaofeng
+ */
 public class SettingActivity extends AppCompatActivity implements ChangePasswordDialogFragment.SendPassword{
     TextView manage, change, telephone;
     Button logout;
@@ -75,7 +77,8 @@ public class SettingActivity extends AppCompatActivity implements ChangePassword
                     finish();
                     break;
                 case R.id.act_LogOut:
-                    intent = new Intent(SettingActivity.this, RegisterActivity.class);
+                    intent = new Intent(SettingActivity.this,LoginActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.telephone:
                     showInputDialog();

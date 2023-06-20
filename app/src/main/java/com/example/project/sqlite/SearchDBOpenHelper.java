@@ -8,6 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.example.project.util.LoggerUtils;
 
+/**
+ * @Author zhangxiaolong
+ */
 public class SearchDBOpenHelper {
 
 

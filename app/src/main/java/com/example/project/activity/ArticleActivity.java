@@ -54,6 +54,9 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 
+/**
+ * @Author zhouya
+ */
 public class ArticleActivity extends AppCompatActivity {
 
     private ImageView Im_autor, Im_like, Im_favorite;
@@ -63,7 +66,6 @@ public class ArticleActivity extends AppCompatActivity {
     boolean isLiked = false; // 初始状态为未点赞
     boolean isFavorited = false; // 初始状态为未收藏
 
-    Gson gson = new Gson();
 
     Text text;//获取传递过来的数据
     Integer tid, cid;
@@ -149,11 +151,6 @@ public class ArticleActivity extends AppCompatActivity {
 //        fillData();
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setIm_like();
-    }
 
     private void delete(String url) {
         OkHttpUtil.delete(url, new Callback() {
@@ -226,7 +223,6 @@ public class ArticleActivity extends AppCompatActivity {
 
 
     //返回按钮
-
     public void btnReturn_detail(View view) {
         finish();
     }

@@ -36,7 +36,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-
+/**
+ * @Author zhangxiaolong
+ */
 public class RecommendFragment extends Fragment implements KindFragment.KindInterface{
 
 
@@ -55,7 +57,6 @@ public class RecommendFragment extends Fragment implements KindFragment.KindInte
             super.handleMessage(msg);
             switch (msg.what) {
                 case 1:
-
                     if (!titles.isEmpty()) {
                         setData();
                         initTabLayout();
@@ -84,7 +85,6 @@ public class RecommendFragment extends Fragment implements KindFragment.KindInte
     public void setData() {
 
         fragmentsList = new ArrayList<>();
-
         for (int i = 0; i < titles.size(); i++) {
             KindFragment fragment = new KindFragment();
             Bundle bundle = new Bundle();
@@ -92,9 +92,6 @@ public class RecommendFragment extends Fragment implements KindFragment.KindInte
             fragment.setArguments(bundle);
             fragmentsList.add(fragment);
         }
-
-
-
         replaceFragment(fragmentsList.get(0));
 
     }

@@ -40,14 +40,6 @@
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 app:srcCompat="@drawable/morentouxiang" />
-<!--            <TextView-->
-<!--                android:layout_gravity="center"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_marginTop="10dp"-->
-<!--                android:textColor="@color/gray"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:text="点击上传头像"/>-->
         </LinearLayout>
 
     </LinearLayout>
@@ -101,45 +93,9 @@
             android:inputType="phone"
             android:hint="请输入你的手机号码"
             android:textSize="16sp" />
-        <!--        <EditText-->
-<!--            android:id="@+id/et_birth"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="40dp"-->
-<!--            android:layout_margin="10dp"-->
-<!--            android:background="@null"-->
-<!--            android:hint="请选择出生日期"-->
-<!--            android:inputType="date"-->
-<!--            android:textSize="16sp" />-->
+
     </LinearLayout>
 
-<!--        <LinearLayout-->
-<!--            android:layout_marginTop="12dp"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:orientation="horizontal">-->
-<!--            <RadioGroup-->
-<!--                android:id="@+id/rg_sex"-->
-<!--                android:gravity="center"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:layout_marginLeft="20dp"-->
-<!--                android:orientation="horizontal">-->
-<!--                <RadioButton-->
-<!--                    android:checked="true"-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="男"-->
-<!--                    android:layout_marginRight="40dp"-->
-<!--                    android:id="@+id/rb_man"/>-->
-<!--                <RadioButton-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:text="女"-->
-<!--                    android:id="@+id/rb_woman"/>-->
-<!--            </RadioGroup>-->
-
-
-<!--    </LinearLayout>-->
 
     <LinearLayout
         android:layout_marginTop="50dp"

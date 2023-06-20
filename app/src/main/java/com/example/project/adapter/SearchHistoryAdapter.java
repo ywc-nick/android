@@ -7,7 +7,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CursorAdapter;
 import android.widget.TextView;
-
+/**
+ * @Author zhangxiaolong
+ */
 public class SearchHistoryAdapter extends CursorAdapter {
     public SearchHistoryAdapter(Context context, Cursor c) {
         super(context, c);

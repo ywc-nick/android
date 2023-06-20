@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
 
     public static final String recommend = "推荐";
     public static final String hot = "热门";
-    public static final String topList = "排行榜";
+//    public static final String topList = "排行榜";
     List<String> titles;
     List<Fragment> fragments;
 
@@ -67,11 +67,11 @@ public class HomeFragment extends Fragment {
         fragments = new ArrayList<>();
         fragments.add(new HotFragment());//热门
         fragments.add(new RecommendFragment());//推荐
-        fragments.add(new TopListFragment());//排行榜
+//        fragments.add(new TopListFragment());//排行榜
         titles = new ArrayList<>();
         titles.add(hot);
         titles.add(recommend);
-        titles.add(topList);
+//        titles.add(topList);
     }
 
 
@@ -79,14 +79,14 @@ public class HomeFragment extends Fragment {
         //1.init
         tableLayout.addTab(tableLayout.newTab());//热门
         tableLayout.addTab(tableLayout.newTab());//推荐
-        tableLayout.addTab(tableLayout.newTab());//排行榜
+//        tableLayout.addTab(tableLayout.newTab());//排行榜
         tableLayout.setTabGravity(TabLayout.GRAVITY_FILL);
 
 
         MyFraAdapter homeFraAdapter = new MyFraAdapter(getChildFragmentManager(), fragments, titles);
         viewPager.setAdapter(homeFraAdapter);
         viewPager.setCurrentItem(1);//设置第二个碎片为初始碎片
-        viewPager.setOffscreenPageLimit(3);//设置预加载页面数量的方法
+        viewPager.setOffscreenPageLimit(2);//设置预加载页面数量的方法
 
         //2 关联
         tableLayout.setupWithViewPager(viewPager);

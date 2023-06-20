@@ -52,6 +52,10 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
+
+/**
+ * @Author jixiaofang
+ */
 public class InfoActivity extends AppCompatActivity {
 
     ImageView cancle, image;
@@ -59,7 +63,7 @@ public class InfoActivity extends AppCompatActivity {
     EditText name, nickname;
     String imagePath=null;
     Custer custer;
-    boolean flag=false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

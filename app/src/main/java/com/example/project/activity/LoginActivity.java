@@ -29,7 +29,9 @@ import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.Response;
 
-
+/**
+ * @Author jixiaofang
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private Button login;
@@ -92,11 +94,7 @@ public class LoginActivity extends AppCompatActivity {
         //获取EditText数据
         String username = name.getText().toString();
         String pass = password.getText().toString();
-
-
-
-
-            url = OkHttpUtil.baseUrl + "/custer/login/" + username + "/" + pass;
+        url = OkHttpUtil.baseUrl + "/custer/login/" + username + "/" + pass;
         //2.配置request:添加数据+请求方法+url
         OkHttpUtil.get(url, new Callback() {
             @Override
